@@ -1,3 +1,8 @@
 {
-  "python.pythonPath": "Day 20 21\\venv\\Scripts\\python.exe"
+  "python.pythonPath": "Day 20 21\\venv\\Scripts\\python.exe",
+  "cmake.configureOnOpen": false,
+  "python.analysis.extraPaths": [
+    "Day 20 21",
+    "Day 20 21\\utils"
+  ]
 }

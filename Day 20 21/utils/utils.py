@@ -1,6 +1,9 @@
+print('__file__={0:<50} | __name__={1:<20} | __package__={2:<20}'.format(__file__,__name__,str(__package__)))
+
+
 from turtle import Turtle, Screen
 from typing import List
-from utils.app_types import Point, Rectangle, Direction
+from .types import Point, Rectangle, Direction
 
 def get_straight_line_vector(src_pos: Point, dst_pos: Point):
   if(str(src_pos) == str(dst_pos)): return [0, 0]
@@ -14,11 +17,18 @@ def get_straight_line_vector(src_pos: Point, dst_pos: Point):
     Exception("Snake can only move vertically")
 
 
-def get_turtle():
+def get_turtle(color = "black"):
+  """Will create and format a turtle for use
+
+  Args:
+      color (str, optional): A Color for the turtle drawings. Defaults to "black".
+
+  Returns:
+      Turtle: A Formatted turtle ready to use
+  """
   turtle = Turtle(visible=False)
-  # turtle.hideturtle()
   turtle.speed(0)
-  turtle.color('black', 'black')
+  turtle.color(color, color)
   
   return turtle
 
@@ -98,10 +108,61 @@ def draw_rectangle(turtle: Turtle, p0: Point, p1: Point, grid_size: int = 10):
 
 
 
-def move_point_horizontally(p: Point, distance: float): return Point(p.x + distance, p.y)
-def move_point_vertically(p: Point, distance: float): return Point(p.x, p.y + distance)
+
+
+
 def move_point(p: Point, direction: Direction, distance: float):
+  """Moves the point 'p' along 'direction' by an amount 'distance'.
+
+  Args:
+      p (Point): The Point to move
+      direction (Direction): The direction of movement
+      distance (float): The distance by which to move the point
+
+  Returns:
+      Point: A new point sitting at the destination position (where p would have been moved)
+  """
+
+  # Utility functions
+  def move_point_horizontally(p: Point, distance: float): return Point(p.x + distance, p.y)
+  def move_point_vertically(p: Point, distance: float): return Point(p.x, p.y + distance)
+
   if(direction == Direction.UP): return move_point_vertically(p, distance)
   if(direction == Direction.DOWN): return move_point_vertically(p, -1 * distance)
   if(direction == Direction.LEFT): return move_point_horizontally(p, -1 * distance)
   if(direction == Direction.RIGHT): return move_point_horizontally(p, distance)
+  
+  # if direction is not recognized, return the point passed as  input
+  return p
+
+
+def are_directions_opposite(dir1: Direction, dir2: Direction):
+  """Given two directions, return true if they are opposite, e.g. up and down
+
+  Args:
+      dir1 (Direction): Direction Enum Value
+      dir2 (Direction): Direction Enum Value
+
+  Returns:
+      boolean: True when directions are opposite else False
+  """
+  if(dir1 == Direction.UP and dir2 == Direction.DOWN): return True
+  if(dir1 == Direction.DOWN and dir2 == Direction.UP): return True
+  if(dir1 == Direction.LEFT and dir2 == Direction.RIGHT): return True
+  if(dir1 == Direction.RIGHT and dir2 == Direction.LEFT): return True
+  return False
+
+def get_opposite_direction(dir1: Direction):
+  """Given a directions, return its opposite, e.g. f(up) = down
+
+  Args:
+      dir1 (Direction): Direction Enum Value
+
+  Returns:
+      Direction: Direction Enum Value
+  """
+  if(dir1 == Direction.UP): return Direction.DOWN
+  if(dir1 == Direction.DOWN): return Direction.UP
+  if(dir1 == Direction.LEFT): return Direction.RIGHT
+  if(dir1 == Direction.RIGHT): return Direction.LEFT
+  return dir1
