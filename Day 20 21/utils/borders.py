@@ -15,7 +15,7 @@ lower_right = move_point(upper_right, Direction.DOWN, game_size)
 lower_left = move_point(lower_right, Direction.LEFT, game_size)
 upper_left = move_point(lower_left, Direction.UP, game_size)
 
-drawer = get_turtle("Blue")
+drawer = get_turtle("#5f6f8b")
 
 game_borders = [
   Segment(head = upper_right, direction = Direction.UP, drawer = drawer, length = game_grids_count),

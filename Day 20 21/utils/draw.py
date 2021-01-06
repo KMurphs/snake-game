@@ -24,6 +24,7 @@ def draw(current_segments: List[Segment], obsolete_segments: List[Segment]):
     draw_rectangle(
       segment.drawer, 
       segment.head, 
+      # The line below will compute the point that is behind segment.head and at a distance specififed by length
       move_point(segment.head, segment.direction, -1 * (segment.length - 1) * grid), 
       grid
     ) for segment in current_segments if segment is not None

@@ -5,17 +5,6 @@ from turtle import Turtle, Screen
 from typing import List
 from .types import Point, Rectangle, Direction
 
-def get_straight_line_vector(src_pos: Point, dst_pos: Point):
-  if(str(src_pos) == str(dst_pos)): return [0, 0]
-  if(src_pos.x == dst_pos.x):
-    delta_vertical = dst_pos.y - src_pos.y
-    return [delta_vertical, 90] if delta_vertical > 0 else [-1 * delta_vertical, -90]
-  elif (src_pos.y == dst_pos.y):
-    delta_horizontal = dst_pos.x - src_pos.x
-    return [delta_horizontal, 0] if delta_horizontal > 0 else [-1 * delta_horizontal, 180]
-  else:
-    Exception("Snake can only move vertically")
-
 
 def get_turtle(color = "black"):
   """Will create and format a turtle for use
@@ -32,7 +21,20 @@ def get_turtle(color = "black"):
   
   return turtle
 
+
+
+
 def get_point_corners(p: Point, square_side: int = 10):
+  """Given a point with coordinates x, y, draw a grid square of size 'square_side' around the point (as center)
+  and return the coordinates of its four corners.
+
+  Args:
+      p (Point): Coordinate of the center of the individual grid square
+      square_side (int, optional): The size of the square that must be drawn around the center. Defaults to 10.
+
+  Returns:
+      Rectangle: Coordinates of the four corners of the grid square drawn (and centered around the argument p)
+  """
   half_square_side = square_side/2
   return Rectangle(
     upper_right = Point(x = p.x + half_square_side, y = p.y + half_square_side),
@@ -41,8 +43,20 @@ def get_point_corners(p: Point, square_side: int = 10):
     upper_left = Point(x = p.x - half_square_side, y = p.y + half_square_side),
   )
 
+
 def get_line_corners(p0: Point, p1: Point, square_side: int = 10):
-  half_square_side = square_side/2
+  """Given a two points sitting in the middle of their respective grid squares,
+  return the four corners of the grid line that join both grid squares.
+
+  Args:
+      p0 (Point): Center of first grid square
+      p1 (Point): Center of second grid square
+      square_side (int, optional): The size of the square that must be drawn around both centers. Defaults to 10.
+
+  Returns:
+      Rectangle: Coordinates of the four corners of the grid line drawn (and whose extremities are centered around the arguments p0 and p1)
+  """
+
   if(p0[0] == p1[0]):
     upper = p0 if p0[1] > p1[1] else p1
     lower = p1 if p0[1] > p1[1] else p0
@@ -54,6 +68,7 @@ def get_line_corners(p0: Point, p1: Point, square_side: int = 10):
       lower_left = lower_corners.lower_left,
       upper_left = upper_corners.upper_left,
     )
+
   elif (p0[1] == p1[1]):
     right = p0 if p0[0] > p1[0] else p1
     left = p1 if p0[0] > p1[0] else p0
@@ -65,33 +80,23 @@ def get_line_corners(p0: Point, p1: Point, square_side: int = 10):
       lower_left = left_corners.lower_left,
       upper_left = left_corners.upper_left,
     )
+
   else:
     Exception("Snake can only move vertically")
 
 
-def draw_snake_body(body: List, drawer = None):
-  turtle = drawer if drawer is not None else get_turtle()
-  first, *rest = body
 
-  if len(rest) == 0: return
-
-  upper_right, lower_right, lower_left, upper_left = get_line_corners(first, rest[0])
-  
-  turtle.penup()
-  turtle.goto(upper_right)
-  turtle.pendown()
-  
-
-  turtle.begin_fill()
-  turtle.goto(lower_right)
-  turtle.goto(lower_left)
-  turtle.goto(upper_left)
-  turtle.goto(upper_right)
-  turtle.end_fill()
-
-  draw_snake_body(rest, turtle)
 
 def draw_rectangle(turtle: Turtle, p0: Point, p1: Point, grid_size: int = 10):
+  """Given a two points sitting in the middle of their respective grid squares,
+  draw the grid line whose grid square extremities have p0 and p1 as centers.
+
+  Args:
+      turtle (Turtle): Drawer object
+      p0 (Point): Center of first extremity
+      p1 (Point): Center of second extremity
+      grid_size (int, optional): The size of the square that must be drawn as the grid. Defaults to 10.
+  """
 
   upper_right, lower_right, lower_left, upper_left = get_line_corners(p0, p1, grid_size)
   
