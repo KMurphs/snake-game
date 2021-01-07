@@ -1,29 +1,17 @@
-from types import SimpleNamespace
-from typing import Any, Callable, Dict, NamedTuple, Tuple
+from typing import Dict, Tuple
+from redux.types import TAction, TReducer, TStore, TSuscriber
 
 
-class TStore:
-  def __init__(self, **kwargs):
-    # self.__dict__.update(kwargs)
-    self.get_state: Callable[[], Dict] = kwargs["get_state"]
-    self.suscribe:  Callable[[Callable[[Dict, TAction], None]], None] = kwargs["suscribe"]
-    self.dispatch: Callable[[TAction], None] = kwargs["dispatch"]
 
-TAction = NamedTuple("TAction", [
-  ("type", str),
-  ("payload", Any)
-], defaults=(None,None))
-TReducer = Callable[[Dict, TAction], Dict]
-TSuscriber = Callable[[Dict, TAction], None]
 
 # https://stackoverflow.com/a/39440252/9034699
 def create_store(reducer: TReducer, initial_state: Dict):
-  current_state = frozenset(initial_state.items())
+  current_state = initial_state
   suscribers: Tuple[TSuscriber] = tuple()
   is_dispatching = False
 
 
-  def get_state(): return dict(current_state) 
+  def get_state(): return current_state.copy()
 
   def suscribe(f):
     nonlocal suscribers
@@ -36,10 +24,11 @@ def create_store(reducer: TReducer, initial_state: Dict):
     is_dispatching = True
 
     try: 
-      next_state = reducer(dict(current_state), action)
+      next_state = reducer(current_state.copy(), action)
       if next_state:
-        current_state = frozenset(next_state.items())
-        [suscriber(dict(current_state), action) for suscriber in suscribers]
+        # current_state = frozenset(next_state.items())
+        current_state = next_state.copy()
+        [suscriber(next_state, action) for suscriber in suscribers]
 
     finally: 
       is_dispatching = False
@@ -57,24 +46,29 @@ def create_store(reducer: TReducer, initial_state: Dict):
 
 
 
-def reducer(state: Dict, action: TAction):
-  if action.type == "INCREASE_KEY_1":
-    state["key1"] = state["key1"] + 1
-    return state
-  if action.type == "INCREASE_KEY_2":
-    state["key2"] = state["key2"] + 1
-    return state
-  if action.type == "INCREASE_KEY_1_BY":
-    state["key1"] = state["key1"] + action.payload
-    return state
-  if action.type == "INCREASE_KEY_2_BY":
-    state["key2"] = state["key2"] + action.payload
-    return state
-  return state
+
 
 
 
 if __name__ == "__main__":
+
+  
+  def reducer(state: Dict, action: TAction):
+    if action.type == "INCREASE_KEY_1":
+      state["key1"] = state["key1"] + 1
+      return state
+    if action.type == "INCREASE_KEY_2":
+      state["key2"] = state["key2"] + 1
+      return state
+    if action.type == "INCREASE_KEY_1_BY":
+      state["key1"] = state["key1"] + action.payload
+      return state
+    if action.type == "INCREASE_KEY_2_BY":
+      state["key2"] = state["key2"] + action.payload
+      return state
+    return state
+
+
   store = create_store(reducer, {
     "key1": 1,
     "key2": 1,

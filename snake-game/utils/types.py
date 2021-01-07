@@ -8,8 +8,6 @@ from enum import Enum
 
 
 
-snake_grid = 20
-
 class Direction(Enum):
   UP = 1
   RIGHT = 2

@@ -1,10 +1,34 @@
 from typing import List
-from .types import Segment, snake_grid
-from .utils import  draw_rectangle, move_point
+
+from redux.types import TAction
+from utils.types import Segment
+from utils.utils import  draw_rectangle, move_point
 
 
 
-def draw(current_segments: List[Segment], obsolete_segments: List[Segment]):
+class GameDrawer:
+  def __init__(self, game_grid, get_snake, get_obsolete_segments, get_game_state, dispatch):
+    self.grid = game_grid
+    self.get_snake = get_snake
+    self.get_obsolete_segments = get_obsolete_segments
+    self.get_game_state = get_game_state
+    self.dispatch = dispatch
+
+
+
+  def run_effects(self): 
+    passed, failed, paused = self.get_game_state()
+    if( passed or failed or paused): return 
+
+    snake, obsolete_segments, grid = self.get_snake(), self.get_obsolete_segments(), self.grid
+    
+    draw([snake.head, snake.tail], obsolete_segments, grid)
+    
+    self.dispatch(TAction("DREW_CURRENT_GAME_STATE", None))
+    
+
+
+def draw(current_segments: List[Segment], obsolete_segments: List[Segment], grid: int):
   """Will draw the current segments on screen. Function will also
   get each one of the obsolete segments to clear themselves before they
   are discarded for good
@@ -16,7 +40,6 @@ def draw(current_segments: List[Segment], obsolete_segments: List[Segment]):
   Returns:
       None
   """
-  grid = snake_grid
 
   [segment.drawer.clear() for segment in obsolete_segments if segment is not None]
   [segment.drawer.clear() for segment in current_segments if segment is not None]

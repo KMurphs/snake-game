@@ -1,72 +1,64 @@
 from turtle import Turtle
-from .utils import get_turtle
-from .types import snake_grid
-from .borders import game_size, upper_right, upper_left, lower_left, lower_right
+from utils.utils import get_square_corners_from_center
+from utils.types import Point
 
-score: int = 0
-max_score: int = 5
-score_pen: Turtle = None
-
+# score: int = 0
+# max_score: int = 5
+# score_pen: Turtle = None
 
 
-def score_init():
-  global score, score_pen
-  score = 0
-  score_pen = get_turtle("#1d72eb") if score_pen is None else score_pen
-  score_pen.clear()
-
-
-
-def score_write_current():
-  
-  score_pen.clear()
-  score_pen.penup()
-  score_pen.color("#1d72eb")
-  score_pen.goto((1 * game_size//2 - snake_grid // 2, game_size//2 + snake_grid // 2))
-  score_pen.pendown()
-  score_pen.write("Score: " + str(score) + " / " + str(max_score), False, align="right", font=("Arial", 16, "normal"))
-
-  return score == max_score
+class ScoreWriter:
+  def __init__(self, drawer, game_grid, game_grid_count, get_score, get_max_score, get_game_state):
+    self.drawer: Turtle = drawer
+    self.game_grid: int = game_grid
+    self.game_grid_count: int = game_grid_count
+    self.get_score = get_score
+    self.get_max_score = get_max_score
+    self.get_game_state = get_game_state
 
 
 
+  def run_effects(self):
+    
+    score = self.get_score()
+    max_score = self.get_max_score()
+    game_size = self.game_grid * self.game_grid_count
+    passed, failed, paused = self.get_game_state()
+
+    if not (passed or failed):
+      self.drawer.clear()
+      self.drawer.penup()
+      self.drawer.color("#1d72eb")
+      self.drawer.goto( (game_size - self.game_grid) // 2, (game_size + self.game_grid) // 2 )
+      self.drawer.pendown()
+      self.drawer.write("Score: " + str(score) + " / " + str(max_score), False, align="right", font=("Arial", 16, "normal"))
+
+
+    else:
+      game_corners = get_square_corners_from_center(Point(0, 0), game_size)
+
+      self.drawer.clear()
+      self.drawer.color("#1d72eb" if passed else "#f65f98")
+      self.drawer.penup()
+
+      self.drawer.begin_fill()
+      self.drawer.goto(game_corners.upper_right)
+      self.drawer.goto(game_corners.upper_left)
+      self.drawer.goto(game_corners.lower_left)
+      self.drawer.goto(game_corners.lower_right)
+      self.drawer.goto(game_corners.upper_right)
+      self.drawer.end_fill()
+
+      self.drawer.goto((0, 0))
+      self.drawer.color("white")
+      self.drawer.write(
+        f"Congratulations!\n\nTotal Score: {str(score)}\nPress 'r' to increase difficulty level" 
+          if passed 
+          else f"Sorry!\nYou miserably Failed!! \n\nScore: {str(score)} / {str(max_score)}", 
+        True, 
+        align="center", 
+        font=("Arial", 16, "normal")
+      )
 
 
 
-
-def score_write_final_results():
-  score_pen.clear()
-  score_pen.color("#1d72eb" if score == max_score else "#f65f98")
-  score_pen.penup()
-
-  score_pen.begin_fill()
-  score_pen.goto(upper_right)
-  score_pen.goto(upper_left)
-  score_pen.goto(lower_left)
-  score_pen.goto(lower_right)
-  score_pen.goto(upper_right)
-  score_pen.end_fill()
-
-  score_pen.goto((0, 0))
-  score_pen.color("white")
-  score_pen.write(
-    f"Congratulations!\n\nTotal Score: {str(score)}\nPress 'r' to increase difficulty level" 
-      if score == max_score 
-      else f"Sorry!\nYou miserably Failed!! \n\nScore: {str(score)} / {str(max_score)}", 
-    True, 
-    align="center", 
-    font=("Arial", 16, "normal")
-  )
-
-
-def score_increase(by_amount: int = 1):
-  global score
-  score += by_amount
-
-  if score == max_score: 
-    score_write_final_results()
-  else:
-    score_write_current()
-
-  return score == max_score
-  

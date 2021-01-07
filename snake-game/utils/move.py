@@ -1,11 +1,36 @@
 from functools import reduce
-from typing import List, Tuple
-from .types import Point, Segment, Snake, Direction, snake_grid
-from .utils import are_directions_opposite, get_opposite_direction, get_turtle, move_point
+
+from redux.types import TAction
+from utils.types import Point, Segment, Snake, Direction
+from utils.utils import get_opposite_direction, get_turtle, move_point
 
 
 
-def move(snake: Snake, direction: Direction, crumb: Point) :#-> Tuple[Snake, List[Segment]]:
+class SnakeMover:
+  def __init__(self, game_grid, get_snake, get_crumb, get_current_direction, get_game_state, dispatch):
+    self.grid = game_grid
+    self.get_snake = get_snake
+    self.get_crumb = get_crumb
+    self.get_current_direction = get_current_direction
+    self.get_game_state = get_game_state
+    self.dispatch = dispatch
+
+
+
+  def run_effects(self): 
+    passed, failed, paused = self.get_game_state()
+    if( passed or failed or paused): return 
+
+    snake, crumb, current_direction, grid = self.get_snake(), self.get_crumb(), self.get_current_direction(), self.grid
+    
+    new_snake, obsolete_segments, took_crumb = move(snake, current_direction, crumb, grid)
+    
+    self.dispatch(TAction("MOVE_SNAKE", {"snake": new_snake, "obsolete": obsolete_segments, "took_crumb": took_crumb}))
+
+
+
+
+def move(snake: Snake, direction: Direction, crumb: Point, grid: int) :#-> Tuple[Snake, List[Segment]]:
   """Will move a snake forward in the direction specified by the 'direction'
   input argument.
 
@@ -18,7 +43,7 @@ def move(snake: Snake, direction: Direction, crumb: Point) :#-> Tuple[Snake, Lis
       might still have things drawn on the screen. Clearing its portion of the screen
       is an effect best handled anywhere but here
   """
-  grid = snake_grid
+
   current_length = reduce(lambda acc, x: acc + x.length , [snake.head] + snake.body  + ([] if snake.tail is None else [snake.tail]), 0)
 
 

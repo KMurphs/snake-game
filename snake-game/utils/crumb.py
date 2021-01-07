@@ -1,39 +1,57 @@
 from turtle import Turtle
 import random
-from .utils import draw_rectangle, get_turtle
-from .types import Point, snake_grid
-from .borders import game_grids_count
 
-crumb_pen: Turtle = None
-current_crumb: Point = None
+from redux.types import TAction
+from utils.utils import draw_rectangle
+from utils.types import Point
 
 
-def crumb_init():
-  global crumb_pen
-  crumb_pen = get_turtle("#f65f98") if crumb_pen is None else crumb_pen
-
-
-
-def crumb_clear():
-  global current_crumb
-  while crumb_pen.undobufferentries(): crumb_pen.undo()
-  crumb_pen.clear()
-  current_crumb = None
+def create_crumb(game_grid: int, game_grids_count: int):
+  return Point(
+    round((game_grids_count - 1) * (random.random() - 0.5)) * game_grid , 
+    round((game_grids_count - 1) * (random.random() - 0.5)) * game_grid
+  )
 
 
 
-def crumb_get():
-  global current_crumb
+class CrumbDrawer:
+  def __init__(self, drawer, game_grid, game_grid_count, get_crumb, get_game_state, dispatch, suscribe):
+    self.drawer: Turtle = drawer
+    self.grid = game_grid
+    self.grid_count = game_grid_count
+    self.get_crumb = get_crumb
+    self.get_game_state = get_game_state
+    self.dispatch = dispatch
+    suscribe(lambda state, action: self.run_clear_effect(get_crumb() == None) )
 
-  if current_crumb is None:
-    current_crumb = Point(
-      round((game_grids_count - 1) * (random.random() - 0.5)) * snake_grid , 
-      round((game_grids_count - 1) * (random.random() - 0.5)) * snake_grid
-    )
-    draw_rectangle(crumb_pen, current_crumb, current_crumb, snake_grid)
 
-  return Point(current_crumb.x, current_crumb.y)
-  
+
+  def run_effects(self): 
+    passed, failed, paused = self.get_game_state()
+    if( passed or failed or paused): return 
+    
+    grid_count, crumb, grid = self.grid_count, self.get_crumb(), self.grid
+
+    if crumb == None:
+      crumb = create_crumb(grid, grid_count)
+      self.dispatch(TAction("CREATED_CRUMB", crumb))
+      draw_rectangle(self.drawer, crumb, crumb, grid)
+
+
+
+  def run_clear_effect(self, do_clear):
+    if not do_clear: return
+    while self.drawer.undobufferentries(): self.drawer.undo()
+    self.drawer.clear()
+
+
+
+
+
+
+
+
+
 
 
 

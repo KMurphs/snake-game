@@ -1,9 +1,12 @@
 print('__file__={0:<50} | __name__={1:<20} | __package__={2:<20}'.format(__file__,__name__,str(__package__)))
 
 
-from turtle import Turtle, Screen
-from typing import List
-from .types import Point, Rectangle, Direction
+from turtle import Turtle
+from utils.types import Point, Rectangle, Direction, Snake
+
+
+
+
 
 
 def get_turtle(color = "black"):
@@ -24,7 +27,7 @@ def get_turtle(color = "black"):
 
 
 
-def get_point_corners(p: Point, square_side: int = 10):
+def get_square_corners_from_center(p: Point, square_side: int = 10):
   """Given a point with coordinates x, y, draw a grid square of size 'square_side' around the point (as center)
   and return the coordinates of its four corners.
 
@@ -60,8 +63,8 @@ def get_line_corners(p0: Point, p1: Point, square_side: int = 10):
   if(p0[0] == p1[0]):
     upper = p0 if p0[1] > p1[1] else p1
     lower = p1 if p0[1] > p1[1] else p0
-    upper_corners = get_point_corners(upper, square_side)
-    lower_corners = get_point_corners(lower, square_side)
+    upper_corners = get_square_corners_from_center(upper, square_side)
+    lower_corners = get_square_corners_from_center(lower, square_side)
     return Rectangle(
       upper_right = upper_corners.upper_right,
       lower_right = lower_corners.lower_right,
@@ -72,8 +75,8 @@ def get_line_corners(p0: Point, p1: Point, square_side: int = 10):
   elif (p0[1] == p1[1]):
     right = p0 if p0[0] > p1[0] else p1
     left = p1 if p0[0] > p1[0] else p0
-    right_corners = get_point_corners(right, square_side)
-    left_corners = get_point_corners(left, square_side)
+    right_corners = get_square_corners_from_center(right, square_side)
+    left_corners = get_square_corners_from_center(left, square_side)
     return Rectangle(
       upper_right = right_corners.upper_right,
       lower_right = right_corners.lower_right,
@@ -141,8 +144,11 @@ def move_point(p: Point, direction: Direction, distance: float):
   return p
 
 
-def are_directions_opposite(dir1: Direction, dir2: Direction):
-  """Given two directions, return true if they are opposite, e.g. up and down
+
+
+
+def are_directions_parallel(dir1: Direction, dir2: Direction):
+  """Given two directions, return true if they are parallel to each other, e.g. up and down
 
   Args:
       dir1 (Direction): Direction Enum Value
@@ -151,11 +157,15 @@ def are_directions_opposite(dir1: Direction, dir2: Direction):
   Returns:
       boolean: True when directions are opposite else False
   """
-  if(dir1 == Direction.UP and dir2 == Direction.DOWN): return True
-  if(dir1 == Direction.DOWN and dir2 == Direction.UP): return True
-  if(dir1 == Direction.LEFT and dir2 == Direction.RIGHT): return True
-  if(dir1 == Direction.RIGHT and dir2 == Direction.LEFT): return True
+  horizontal_directions = [ Direction.UP, Direction.DOWN ]
+  vertical_directions = [ Direction.LEFT, Direction.RIGHT ]
+  if((dir1 in horizontal_directions) and (dir2 in horizontal_directions)): return True
+  if((dir1 in vertical_directions) and (dir2 in vertical_directions)): return True
   return False
+
+
+
+
 
 def get_opposite_direction(dir1: Direction):
   """Given a directions, return its opposite, e.g. f(up) = down
