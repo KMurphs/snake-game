@@ -1,5 +1,3 @@
-# Game Snake
-
 # [Game Snake](https://github.com/KMurphs/snake-game.git)
 
 
@@ -29,6 +27,8 @@ The **Snake Game** consists of snake that moves on grid within border that it mu
 ## Context
 
 The project was motivated by the ``#100DaysOfCode`` twitter movement. Each day for 100days, I work on some project.  
+
+See this documentation at: [https://kmurphs.github.io/snake-game](https://kmurphs.github.io/snake-game)
 
 
 ## Setup
