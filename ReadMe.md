@@ -55,6 +55,8 @@ python -m venv .venv
 ```
 
 Depending on whether the application will only be run, or if a development setup must be created, run one of the following
+
+
 ```
 pip install -r .requirements\dev.txt
 
