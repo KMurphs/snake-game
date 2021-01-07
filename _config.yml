@@ -1,0 +1,13 @@
+theme: jekyll-theme-cayman
+
+# To resolve urls properly
+baseurl: "/snake-game" # the subpath of your site, e.g. /blog
+url: "https://kmurphs.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Site Presentation
+title: Snake Game
+description: Simple Game Snake using Python and Turtle Graphics
+
+# Use for linking portfolio landing page to project
+skills: Python 3, Python Typing, Turtle Graphics, Game, Functional Programming, State Management, Redux
+banner: https://raw.githubusercontent.com/KMurphs/snake-game/master/docs/hero.png
