@@ -48,6 +48,7 @@ pip install virtualenv
 
 1. Open a Command Prompt, Naviguate to the ``snake-game`` directory, Activate the virtual environment and Install dependencies
     - Note that an internet connection might be required to successfully perform this step
+
 ```
 python -m venv .venv
 .venv\scripts\activate
@@ -61,6 +62,8 @@ pip install -r .requirements\prod.txt
 ```
 
 2. On the commmand line prompt, type 
+
+
 ```
 .venv\scripts\activate
 
@@ -68,11 +71,14 @@ cd snake-game
 python main.py
 ```
 
+
 ## Github Page
 
 To support github pages, the following files/folders were placed in the root directiory of the project:
+
 - ``assets``: Contains the css/scss stylesheet.
 - ``_config.yml``: Contains configuration information for the pages.
+
 
 ## Issues
 
