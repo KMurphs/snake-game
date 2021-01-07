@@ -12,6 +12,9 @@ class UserMessageWriter:
 
 
   def run_effects(self):
+    """Displays a message for the user with instructions on which keys allow him to do what during the game.
+    The message changes on pause.
+    """
     msgs = [
       "Use Arrows to move, 'space' to pause, 'r' to restart ",
       "Press 'space' to resume "

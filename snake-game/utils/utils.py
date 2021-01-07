@@ -1,8 +1,6 @@
-print('__file__={0:<50} | __name__={1:<20} | __package__={2:<20}'.format(__file__,__name__,str(__package__)))
-
 
 from turtle import Turtle
-from utils.types import Point, Rectangle, Direction, Snake
+from utils.types import Point, Rectangle, Direction
 
 
 

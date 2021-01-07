@@ -4,7 +4,15 @@ from utils.utils import get_turtle
 from utils.types import Point, Direction, Segment, Snake
 
 
+
+
+
 def get_initial_state():
+  """Utility function that allows resetting the store to the same initial state everytime.
+
+  Returns:
+      [Any]: Initial state of the game
+  """
   return {
     "game": {
       "snake": Snake(head=Segment(head=Point(0,0), direction=Direction.RIGHT, drawer=get_turtle("#1d72eb"), length=3), body=[], tail=None),
@@ -27,28 +35,27 @@ def get_initial_state():
   }
 
 
+
+
+
 def reducer(state: Dict, action: TAction):
-  if action.type == "CHANGE_DIRECTION":
-    if action.payload:
-      state["game"]["current_direction"] = action.payload
-    return state
+  """Custom reducer for our generic state store.
+  The store calls this function with a copy of its own current state, and an action being dispatched by some components.
+  
+  It is the reducer to predictably compute a new state given these inputs.
+
+  Args:
+      state (Dict): Currrent state of store
+      action (TAction): Current action being dispatched/handled/processed
+
+  Returns:
+      Dict: Updated state
+  """
+
 
   if action.type == "INITIALIZE_SCREEN":
     if action.payload:
       state["game"]["screen"] = action.payload
-    return state
-
-  if action.type == "CREATED_CRUMB":
-    if action.payload:
-      state["crumb"]["point"] = action.payload
-    return state
-
-  if action.type == "DREW_CURRENT_GAME_STATE":
-    state["game"]["obsolete_segments"] = []
-    return state
-    
-  if action.type == "GAME_IS_INVALID":
-    state["game"]["is_invalid"] = True
     return state
 
   if action.type == "RESET_GAME":
@@ -58,9 +65,10 @@ def reducer(state: Dict, action: TAction):
     if(is_max_score):
       state["game"]["speed"] = prev_game_speed - 50
     return state
-
-  if action.type == "TOGGLE_PAUSE":
-    state["game"]["is_paused"] = not state["game"]["is_paused"] 
+  
+  if action.type == "CHANGE_DIRECTION":
+    if action.payload:
+      state["game"]["current_direction"] = action.payload
     return state
 
   if action.type == "MOVE_SNAKE":
@@ -74,6 +82,25 @@ def reducer(state: Dict, action: TAction):
         state["score"]["current"] = state["score"]["current"] + 1
         state["score"]["is_max"] = state["score"]["current"] == state["score"]["max"]
     return state
+
+  if action.type == "DREW_CURRENT_GAME_STATE":
+    state["game"]["obsolete_segments"] = []
+    return state
+
+  if action.type == "CREATED_CRUMB":
+    if action.payload:
+      state["crumb"]["point"] = action.payload
+    return state
+
+  if action.type == "GAME_IS_INVALID":
+    state["game"]["is_invalid"] = True
+    return state
+
+
+  if action.type == "TOGGLE_PAUSE":
+    state["game"]["is_paused"] = not state["game"]["is_paused"] 
+    return state
+
 
   return state
 

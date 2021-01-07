@@ -18,6 +18,9 @@ class SnakeMover:
 
 
   def run_effects(self): 
+    """Main side effect of the snake mover. Given the current direction (pressed by user, or defaults to current snake heading), update the snake model 
+    to reflect the fact that it has moved/steped
+    """
     passed, failed, paused = self.get_game_state()
     if( passed or failed or paused): return 
 
@@ -25,6 +28,8 @@ class SnakeMover:
     
     new_snake, obsolete_segments, took_crumb = move(snake, current_direction, crumb, grid)
     
+    # Obsolete segments are uploaded to store so that someone else responsible for drawing effects can clear them
+    # Also notify the store that the current crumb on screen has been swallowed (Eventually, a new one must be provisioned and drawn on screen)
     self.dispatch(TAction("MOVE_SNAKE", {"snake": new_snake, "obsolete": obsolete_segments, "took_crumb": took_crumb}))
 
 
@@ -46,14 +51,11 @@ def move(snake: Snake, direction: Direction, crumb: Point, grid: int) :#-> Tuple
 
   current_length = reduce(lambda acc, x: acc + x.length , [snake.head] + snake.body  + ([] if snake.tail is None else [snake.tail]), 0)
 
-
-  # Do not attempt to move down a snake that's moving up
-  # if(are_directions_opposite(snake.head.direction, direction)): return (snake, [])
-  
-  # If the direction of motion is tha tof the snake, increease the length
-  # of the head segment of the snake
+  # Move the head point of the snake in the direction of motion by a distance of 1 unit square
   moved_head = move_point(snake.head.head, direction, grid)
 
+  # If the direction of motion is that of the snake, increase the length
+  # of the head segment of the snake
   if(snake.head.direction in [direction, get_opposite_direction(direction)]):
     tmp_head = Segment(
       head = moved_head, 
@@ -78,7 +80,7 @@ def move(snake: Snake, direction: Direction, crumb: Point, grid: int) :#-> Tuple
 
 
 
-  # If there is a new head, the old head joins the body
+  # If there is a new head (i.e. direction changed), the old head joins the body
   tmp_body = [tmp_head] + old_head_container + snake.body + ([] if snake.tail is None else [snake.tail])
 
 
@@ -99,7 +101,7 @@ def move(snake: Snake, direction: Direction, crumb: Point, grid: int) :#-> Tuple
 
 
 
-  # INVARIANT: length before 'current_length' must be length after 'new_length'
+  # INVARIANT: length before ('current_length') must be length after ('new_length')
   new_length = 0
   i = -1
   while(new_length < current_length):
@@ -110,10 +112,10 @@ def move(snake: Snake, direction: Direction, crumb: Point, grid: int) :#-> Tuple
   # Case 1: new_length = current_length, get rid of everything from i + 1 upward
   # Case 2: new_length > current_length, get rif of everything from i + 1 upward, cut i to fit invariant length
   
-  # Length tocut out from i
+  # Length to cut out from i for the total length of the snake to remain constant
   extra_length = new_length - current_length
   
-  # Body of segments whose total length equal current_length
+  # Grouping of segments whose total length equal current_length
   adjusted_body = map(
     lambda args: args[1] if args[0] != i else Segment(head = args[1].head, direction = args[1].direction, drawer = args[1].drawer, length = args[1].length - extra_length), 
     enumerate(tmp_body[0 : i + 1])

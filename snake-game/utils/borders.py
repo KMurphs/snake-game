@@ -8,21 +8,19 @@ from utils.utils import  get_square_corners_from_center, get_turtle
 
 class GameBorders():
   def __init__(self, game_grid: int, game_grids_count: int):
+    """Build Game borders as Segment and collect them. 
+    
+    Drawing is a side effect and is left to be executed somewhere else. This function strives to behave as a pure function as much as possible.
+
+    Args:
+        game_grid (int): Size of the atomic square of the game grid
+        game_grids_count (int): Number of game_grid squares along each side of the (square) game board
+    """
     game_size = game_grids_count * game_grid
 
     self.drawer = get_turtle("#5f6f8b")
 
     game_corners = get_square_corners_from_center(Point(0, 0), game_size)
-
-    # self.upper_right = Point(game_size//2, game_size//2)
-    # self.lower_right = move_point(self.upper_right, Direction.DOWN, game_size)
-    # self.lower_left = move_point(self.lower_right, Direction.LEFT, game_size)
-    # self.upper_left = move_point(self.lower_left, Direction.UP, game_size)
-
-    # self.upper_right = game_corners.upper_right
-    # self.lower_right = game_corners.lower_right
-    # self.lower_left = game_corners.lower_left
-    # self.upper_left = game_corners.upper_left
 
     self.borders = [
       Segment(head = game_corners.upper_right, direction = Direction.UP,    drawer = self.drawer, length = game_grids_count),

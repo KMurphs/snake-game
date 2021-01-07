@@ -17,7 +17,15 @@ def get_screen():
 
 
 def schedule_move(store: TStore, direction):
+  """Binds the inner function to a specific direction. This inner function will become the callback that responds to the user input/event
+
+  Args:
+      store (TStore): Data store
+      direction ([type]): direction that matches the key pressed by the user
+  """
   def inner_move():
+    """Notify the store, that the user wants the snakes to move in a specific function at the next game tick
+    """
     
     curr = store.get_state()
     snake: Snake = curr["game"]["snake"]
@@ -39,6 +47,11 @@ class GameScreen():
     self.pause = lambda: dispatch(TAction("TOGGLE_PAUSE", None))
   
   def run_effects(self, store):
+    """Main effect for the screen object wrapper. Set up the event listeners and enter an infinite while loop
+
+    Args:
+        store ([type]): [description]
+    """
     self.screen.listen()
     self.screen.onkeypress(schedule_move(store, Direction.UP), "Up")
     self.screen.onkeypress(schedule_move(store, Direction.DOWN), "Down")

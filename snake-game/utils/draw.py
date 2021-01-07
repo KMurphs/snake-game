@@ -17,6 +17,8 @@ class GameDrawer:
 
 
   def run_effects(self): 
+    """Main side effect of the snake drawer. It draws the updated snake and cleans up anything on the screen and out of place that belonged to the old one.
+    """
     passed, failed, paused = self.get_game_state()
     if( passed or failed or paused): return 
 

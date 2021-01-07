@@ -2,9 +2,6 @@ from turtle import Turtle
 from utils.utils import get_square_corners_from_center
 from utils.types import Point
 
-# score: int = 0
-# max_score: int = 5
-# score_pen: Turtle = None
 
 
 class ScoreWriter:
@@ -19,12 +16,16 @@ class ScoreWriter:
 
 
   def run_effects(self):
+    """Main effect of score writer. Depending on the current score, state of the game write text on screen.
+    """
     
     score = self.get_score()
     max_score = self.get_max_score()
     game_size = self.game_grid * self.game_grid_count
     passed, failed, paused = self.get_game_state()
+    
 
+    # Game is its normal state, update score displayed
     if not (passed or failed):
       self.drawer.clear()
       self.drawer.penup()
@@ -33,7 +34,7 @@ class ScoreWriter:
       self.drawer.pendown()
       self.drawer.write("Score: " + str(score) + " / " + str(max_score), False, align="right", font=("Arial", 16, "normal"))
 
-
+    # Game has either failed or succeeded. Write the appropriate message for the user
     else:
       game_corners = get_square_corners_from_center(Point(0, 0), game_size)
 
