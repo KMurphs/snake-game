@@ -68,6 +68,12 @@ cd snake-game
 python main.py
 ```
 
+## Github Page
+
+To support github pages, the following files/folders were placed in the root directiory of the project:
+- ``assets``: Contains the css/scss stylesheet.
+- ``_config.yml``: Contains configuration information for the pages.
+
 ## Issues
 
 ### Issues with imports
