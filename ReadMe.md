@@ -1,6 +1,6 @@
 # [Game Snake](https://github.com/KMurphs/snake-game.git)
 
-
+See a styled version of this documentation at: [https://kmurphs.github.io/snake-game](https://kmurphs.github.io/snake-game)
 
 ## Overview
 
@@ -28,7 +28,7 @@ The **Snake Game** consists of snake that moves on grid within border that it mu
 
 The project was motivated by the ``#100DaysOfCode`` twitter movement. Each day for 100days, I work on some project.  
 
-See this documentation at: [https://kmurphs.github.io/snake-game](https://kmurphs.github.io/snake-game)
+
 
 
 ## Setup
@@ -109,3 +109,14 @@ I'm opened to constructive criticism. If you have remarks/suggestions, I wam alw
 1. [https://github.com/microsoft/pylance-release/issues/236#issuecomment-727575436](https://github.com/microsoft/pylance-release/issues/236#issuecomment-727575436)
 2. [Turtle Graphics Documentation](https://docs.python.org/3/library/turtle.html#turtle.done)
 
+
+<div style="display: none">
+
+3. https://github.com/pypa/sampleproject
+4. https://pypi.org/project/python_boilerplate_template/
+5. https://www.jeffknupp.com/blog/2013/08/16/open-sourcing-a-python-project-the-right-way/
+6. https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/quickstart.html
+7. https://github.com/raghavan97/projdir/blob/master/setup.py
+8. https://raghavan97.github.io/2016/02/11/logger-post/
+
+</div>
