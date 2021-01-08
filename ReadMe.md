@@ -108,7 +108,7 @@ I'm opened to constructive criticism. If you have remarks/suggestions, I wam alw
 1. [https://napuzba.com/a/import-error-relative-no-parent/p3](https://napuzba.com/a/import-error-relative-no-parent/p3)
 1. [https://github.com/microsoft/pylance-release/issues/236#issuecomment-727575436](https://github.com/microsoft/pylance-release/issues/236#issuecomment-727575436)
 2. [Turtle Graphics Documentation](https://docs.python.org/3/library/turtle.html#turtle.done)
-
+3. [https://napuzba.com/a/import-error-relative-no-parent/p3](https://napuzba.com/a/import-error-relative-no-parent/p3)
 
 <div style="display: none">
 
@@ -118,5 +118,8 @@ I'm opened to constructive criticism. If you have remarks/suggestions, I wam alw
 6. https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/quickstart.html
 7. https://github.com/raghavan97/projdir/blob/master/setup.py
 8. https://raghavan97.github.io/2016/02/11/logger-post/
+9. https://github.com/navdeep-G/setup.py/blob/master/setup.py
+10. https://realpython.com/python-application-layouts/
+11. https://pythonhosted.org/an_example_pypi_project/setuptools.html
 
 </div>
