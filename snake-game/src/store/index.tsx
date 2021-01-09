@@ -3,7 +3,7 @@ import { connect, Provider } from "react-redux";
 import { createStore, Reducer } from "redux";
 import { TAction, TState } from "./type";
 
-export const mainReducer: Reducer<TState | undefined, TAction> = (state, action)=>{
+const mainReducer: Reducer<TState | undefined, TAction> = (state, action)=>{
   switch(action.type){
     case "INCREMENT":
         return { counter: state ? state.counter + 1 : 1 }
@@ -14,11 +14,11 @@ export const mainReducer: Reducer<TState | undefined, TAction> = (state, action)
 }
 
 
-export const mapStateToProps = (state: TState)=>{
+const mapStateToProps = (state: TState)=>{
   return state
 }
 
-export const mapDispatchToProps = (dispatch: Dispatch<TAction>)=>{
+const mapDispatchToProps = (dispatch: Dispatch<TAction>)=>{
   return {
     handleIncrement: ()=> dispatch({type: "INCREMENT"})
   }
@@ -29,10 +29,15 @@ export const mapDispatchToProps = (dispatch: Dispatch<TAction>)=>{
 
 
 
+const getInitialState = (): TState => {
+  return {
+    counter: 10
+  }
+}
+const store = createStore(mainReducer, getInitialState())
 
 
 
-export const store = createStore(mainReducer)
 export const connectToStore = (Component: React.FC<any>) => ()=>{
   const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Component);
   return (
