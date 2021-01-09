@@ -122,4 +122,6 @@ I'm opened to constructive criticism. If you have remarks/suggestions, I wam alw
 10. https://realpython.com/python-application-layouts/
 11. https://pythonhosted.org/an_example_pypi_project/setuptools.html
 
+12. https://vshaxe.github.io/vscode-extern/vscode/GlobPattern.html
+13. https://www.codementor.io/@rajjeet/step-by-step-how-to-add-redux-to-a-react-app-11tcgslmvi
 </div>
