@@ -1,8 +1,3 @@
 {
-  "python.pythonPath": ".venv\\Scripts\\python.exe",
-  "cmake.configureOnOpen": false,
-  "python.analysis.extraPaths": [
-    "snake-game",
-    "snake-game\\utils"
-  ]
+  "html-css-class-completion.includeGlobPattern": "snake-game/snake-game/src/**/*.{css,html}" 
 }
