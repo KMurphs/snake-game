@@ -104,11 +104,8 @@ I'm opened to constructive criticism. If you have remarks/suggestions, I wam alw
 
 ## References
 
-1. [https://stackoverflow.com/questions/14132789/relative-imports-for-the-billionth-time](https://stackoverflow.com/questions/14132789/relative-imports-for-the-billionth-time)
-1. [https://napuzba.com/a/import-error-relative-no-parent/p3](https://napuzba.com/a/import-error-relative-no-parent/p3)
-1. [https://github.com/microsoft/pylance-release/issues/236#issuecomment-727575436](https://github.com/microsoft/pylance-release/issues/236#issuecomment-727575436)
-2. [Turtle Graphics Documentation](https://docs.python.org/3/library/turtle.html#turtle.done)
-3. [https://napuzba.com/a/import-error-relative-no-parent/p3](https://napuzba.com/a/import-error-relative-no-parent/p3)
+1. [https://stackoverflow.com/questions/43634583/prevent-landscape-orientation-mobile-website](https://stackoverflow.com/questions/43634583/prevent-landscape-orientation-mobile-website)
+2. [https://css-tricks.com/snippets/css/orientation-lock/](https://css-tricks.com/snippets/css/orientation-lock/)
 
 <div style="display: none">
 

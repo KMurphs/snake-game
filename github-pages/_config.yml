@@ -1,0 +1,13 @@
+theme: jekyll-theme-cayman
+
+# To resolve urls properly
+baseurl: "/table-sorter" # the subpath of your site, e.g. /blog
+url: "https://kmurphs.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Site Presentation
+title: Table Sorter
+description: Application that demonstrate sorting algorithms on tabular data along with vizualization of main sorting algorithms
+
+# Use for linking portfolio landing page to project
+skills: Data Structure and Algorithms, React, Typescript, Tailwindcss, Lazy Loading, Drag And Drop API, Responsive
+banner: https://raw.githubusercontent.com/KMurphs/table-sorter/master/docs/assets/imgs/hero.png

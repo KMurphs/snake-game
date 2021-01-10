@@ -4,9 +4,14 @@ import { createStore, Reducer } from "redux";
 import { TAction, TState } from "./type";
 
 const mainReducer: Reducer<TState | undefined, TAction> = (state, action)=>{
+  
+  if(!state) return state;
+
   switch(action.type){
-    case "INCREMENT":
-        return { counter: state ? state.counter + 1 : 1 }
+    case "UPDATE_USERNAME":
+      const { username, ...rest } = state
+      const updated_username = action.payload ? { username :  action.payload } : { username }
+      return { ...updated_username, ...rest }
 
     default:
       return state
@@ -15,12 +20,15 @@ const mainReducer: Reducer<TState | undefined, TAction> = (state, action)=>{
 
 
 const mapStateToProps = (state: TState)=>{
-  return state
+  return {
+    ...state, 
+    ...{isLoggedIn: state.username !== ""}
+  }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<TAction>)=>{
   return {
-    handleIncrement: ()=> dispatch({type: "INCREMENT"})
+    handleNewUsername: ()=> dispatch({type: "UPDATE_USERNAME"})
   }
 }
 
@@ -30,11 +38,13 @@ const mapDispatchToProps = (dispatch: Dispatch<TAction>)=>{
 
 
 const getInitialState = (): TState => {
-  return {
-    counter: 10
+  const state: TState =  {
+    version: "1.0",
+    username: "",
   }
+  return state;
 }
-const store = createStore(mainReducer, getInitialState())
+const store = createStore(mainReducer, getInitialState());
 
 
 

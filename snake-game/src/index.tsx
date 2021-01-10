@@ -6,16 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import { connectToStore } from './store';
 
 
-const Wrapper = connectToStore(App)
+const AppWithReduxStore = connectToStore(App)
 
 ReactDOM.render(
 
   <React.StrictMode>
-    <Wrapper />
-    {/* <div>1</div> */}
-    {
-      // ()=>connectToStore(App)
-    }
+    <AppWithReduxStore />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -4,7 +4,15 @@ export type TAction = {
 }
 
 export type TState = {
-  counter: number
+  version: string,
+  username: string,
 }
 
 export type TReducer = (state: TState, action: TAction) => TState
+
+
+export type TUser = {
+  name: string,
+  score: number,
+  time: number
+}
