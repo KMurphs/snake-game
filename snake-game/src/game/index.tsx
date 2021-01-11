@@ -5,19 +5,21 @@ import logo from "./assets/snake-game-logo-sm.gif"
 import Board from "./board";
 import "./index.css"
 import Keypad from "./keypad";
+import { secsToString } from "./utils";
 type Props = {
   user: TUser
 }
-const intToPaddedString = (n: number, size: number) => {
-  const s = Array(size).fill("0").join("") + parseInt(n + ""); 
-  return s.substr(s.length - size, size);
-}
-const secsToString = (secs: number): string => (Math.floor(secs/60) === 0 ? "" : secsToString(Math.round(secs/60)) + ":") + intToPaddedString(secs % 60, 2);
+
+
+
 export default function Game({user}:Props){
 
   const [isPaneOpen, setIsPaneOpen] = useState(false)
   
 
+
+
+  
   return (
     <section id="game" className="flex flex-col w-full height-100vh px-6 py-2 m-auto">
 

@@ -27,13 +27,14 @@ export default function Board(){
     snake.current = getInitialSnake(grid_rows, grid_cols);
     markSnake(boardRef.current, snake.current, cssClass, true);
 
+    // Cleanup current snake on screen
     return () => markSnake(boardRef.current, snake.current, cssClass, false);
   }, [grid_rows, grid_cols])
 
 
 
 
-  
+
   // useEffect(()=>{
   //   const interval = setInterval(()=>{
       

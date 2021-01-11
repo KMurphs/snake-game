@@ -81,7 +81,9 @@ export const useBoardDimension = (target: HTMLElement | null, cb: (clientWidth: 
 }
 
 /**
- * Iterates through all the elements of the "snake" input and add ("addClass" is true) or 
+ * Effectful function - Interacts with DOM
+ * 
+ * Function iterates through all the elements of the "snake" input and add ("addClass" is true) or 
  * remove ("addClass" is false) the input css class "cssClass" from the corresponding node/square grid on the ui.
  * 
  * The function relies on having a reference to the parent HTML node "target" that contains the game grid
@@ -100,3 +102,27 @@ export const markSnake = (target: HTMLElement | null, snake: Point[], cssClass: 
     !addClass && itemNode?.classList.remove(cssClass);
   })
 }
+
+
+/**
+ * Convert a number "n" to an integer than a string. The string is expected to have a minimum 
+ * width of "size" and it is padded with "0" to fulfill this requirement.
+ * 
+ * @date 2021-01-11
+ * @param {number} n: number - number to convert to string
+ * @param {number} size: number - min width of resulting string
+ * @returns {string}: string - "n" as padded string and of width "size" 
+ */
+const intToPaddedString = (n: number, size: number) => {
+  const s = Array(size).fill("0").join("") + parseInt(n + ""); 
+  return s.substr(s.length - size, size);
+}
+
+/**
+ * Convert a number of secs to a time format (i.e. "125" sec is transformed "02:05" secs)
+ * 
+ * @date 2021-01-11
+ * @param {number} secs: number - Number of seconds
+ * @returns {string}: string
+ */
+export const secsToString = (secs: number): string => (Math.floor(secs/60) === 0 ? "" : secsToString(Math.round(secs/60)) + ":") + intToPaddedString(secs % 60, 2);
