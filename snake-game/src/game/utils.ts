@@ -96,7 +96,7 @@ export const useBoardDimension = (target: HTMLElement | null, cb: (clientWidth: 
  */
 export const markSnake = (target: HTMLElement | null, snake: Point[], cssClass: string, addClass: boolean = false) => {
   if(!target) return;
-  snake.map(item => {
+  snake.forEach(item => {
     const itemNode = target.querySelector(`.grid-item.row-${item.y}.col-${item.x}`);
     addClass && !itemNode?.classList.contains(cssClass) && itemNode?.classList.add(cssClass);
     !addClass && itemNode?.classList.remove(cssClass);

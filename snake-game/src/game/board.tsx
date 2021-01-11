@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { getInitialSnake, markSnake, useBoardDimension } from "./utils";
 
 
@@ -24,11 +24,12 @@ export default function Board(){
   const snake = useRef(getInitialSnake(grid_rows, grid_cols));
   // This effect draws the initial snake on screen. Should only run once or twice
   useEffect(()=>{
+    const target = boardRef.current
     snake.current = getInitialSnake(grid_rows, grid_cols);
-    markSnake(boardRef.current, snake.current, cssClass, true);
+    markSnake(target, snake.current, cssClass, true);
 
     // Cleanup current snake on screen
-    return () => markSnake(boardRef.current, snake.current, cssClass, false);
+    return () => markSnake(target, snake.current, cssClass, false);
   }, [grid_rows, grid_cols])
 
 

@@ -19,13 +19,13 @@ export default function Game({user}:Props){
 
 
 
-  
+
   return (
     <section id="game" className="flex flex-col w-full height-100vh px-6 py-2 m-auto">
 
 
       <header className="flex justify-between items-center h-8 mb-6 relative">
-        <img src={logo} alt="Gif image of a snake drawing a S" className="h-6"/>
+        <img src={logo} alt="Gif of a snake drawing a S" className="h-6"/>
         <div className="">
           <span className="text-lg">{user.name}</span>
           <span className="ml-4">{secsToString(user.timeScore)}</span>
