@@ -36,7 +36,7 @@ export default function Login({onLogin}:Props){
 
   const [showModal, setShowModal] = useState(false);
   const [username, setUsername] = useState("");
-  const [showValidatedFrom, setShowValidatedFrom] = useState(false);
+  const [showValidatedForm, setShowValidatedForm] = useState(false);
   
   /**
    * User wants to login as "username". Verify that "username" is registered in users db object ("users" arguments from local storage)
@@ -44,7 +44,7 @@ export default function Login({onLogin}:Props){
    * If user is not registered, pull modal to get from user, how we should proceed.
    */
   const handleOnLogin = (users: TUser[], username: string)=>{
-    setShowValidatedFrom(true);
+    setShowValidatedForm(true);
     if(!isUsernameValid(username)) return
     const [user] = users.filter(curr => curr.name.toLowerCase() === username.toLowerCase());
     user && onLogin(user);
@@ -57,7 +57,7 @@ export default function Login({onLogin}:Props){
    * If doRegisterUser is True, login, schedule an effect to update storage and app cache
    */
   const handleUnkownUserResponse = (username: string, doRegisterUser : boolean) => {
-    if(!username || username === "" || username === null || username === undefined) return
+    if(!isUsernameValid(username)) return
     const user: TUser = { name: capitalizeFirstLetter(username), pointScore: 0, timeScore: 0 }
     doRegisterUser && setUsers(u => [...u, user]);
     !doRegisterUser && setUsername("");
@@ -92,7 +92,7 @@ export default function Login({onLogin}:Props){
       </main>
 
       <footer className="form-container mt-4 flex-initial md:mt-20 md:max-w-sm md:mx-4">
-        <TextInput value={username} setValue={val => setUsername(val + "")} label="Enter Username" fontawesomeClass="fas fa-user" extraClasses={showValidatedFrom && !isUsernameValid(username) ? "invalid" : ""}/>
+        <TextInput value={username} setValue={val => setUsername(val + "")} label="Enter Username" fontawesomeClass="fas fa-user" extraClasses={showValidatedForm && !isUsernameValid(username) ? "invalid" : ""}/>
         <button className="btn w-full mt-16" onClick={()=>handleOnLogin(users, username)}>Start</button>
       </footer>
 

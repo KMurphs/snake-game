@@ -1,0 +1,73 @@
+#game .hamburger-menu-container{
+  --main-color: var(--secondary-500);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.game-control{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+.game-control:focus{
+  outline: none;
+}
+.game-control i{
+  /* color: white; */
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 7px black;
+}
+.game-control:active i{
+  text-shadow: 0px 0px 7px black;
+}
+
+
+
+/* Pulse Animation */
+.game-control.animating{
+  background: transparent;
+  box-shadow: 0 0 0 0 rgba(44, 89, 172, 1);
+  transform: scale(1);
+	animation: pulse-primary 0.3s 1;
+}
+@keyframes pulse-primary {
+	0% {
+		/* transform: scale(0.95); */
+		box-shadow: 0 0 0 0 rgba(44, 89, 172, 0.7);
+	}
+	
+	70% {
+		/* transform: scale(1); */
+		box-shadow: 0 0 0 15px rgba(44, 89, 172, 0);
+	}
+	
+	100% {
+		/* transform: scale(0.95); */
+		box-shadow: 0 0 0 0 rgba(44, 89, 172, 0);
+	}
+}
+
+
+
+.game-keypad{
+  grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr 1fr;
+  /* max-width: 250px; */
+}
+/* .game-keypad > div::before{
+  display: block;
+  padding-bottom: 100%;
+  content: "";
+} */
+.game-keypad > div{
+  height: 72px;
+}

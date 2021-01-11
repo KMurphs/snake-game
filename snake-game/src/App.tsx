@@ -17,10 +17,11 @@ import { TUser } from './store/type';
 type Props = {
   isLoggedIn: boolean,
   version: string,
-  loginUser: (user: TUser)=>void
+  loginUser: (user: TUser)=>void,
+  user: TUser
 }
 
-function App({isLoggedIn, version, loginUser}: Props) {
+function App({isLoggedIn, version, loginUser, user}: Props) {
 
   console.log(`Current App version: ${version}`);
 
@@ -47,7 +48,7 @@ function App({isLoggedIn, version, loginUser}: Props) {
 
           
         <Route path={`/play`} render={({history})=>(
-          isLoggedIn ? <Game /*backToWelcome={()=>history.push(`/welcome`)} *//> : <Redirect to={`/login`} />
+          isLoggedIn ? <Game user={user}/*backToWelcome={()=>history.push(`/welcome`)} *//> : <Redirect to={`/login`} />
         )}/>
 
 
