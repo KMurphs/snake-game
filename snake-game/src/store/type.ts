@@ -5,7 +5,7 @@ export type TAction = {
 
 export type TState = {
   version: string,
-  username: string,
+  user: TUser,
 }
 
 export type TReducer = (state: TState, action: TAction) => TState
@@ -13,6 +13,6 @@ export type TReducer = (state: TState, action: TAction) => TState
 
 export type TUser = {
   name: string,
-  score: number,
-  time: number
+  timeScore: number,
+  pointScore: number,
 }

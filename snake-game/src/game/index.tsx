@@ -1,9 +1,9 @@
 
 
-type Props = {
+// type Props = {
 
-}
-export default function Game({}:Props){
+// }
+export default function Game(/*{}:Props*/){
 
   return (
     <section id="game">

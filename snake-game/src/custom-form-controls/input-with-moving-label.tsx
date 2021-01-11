@@ -5,16 +5,17 @@ export type Props = {
   value: number | string,
   setValue: (newValue: number | string) => void,
   label: string,
+  extraClasses?: string,
   fontawesomeClass?: string,
 }
 type PropsInternal = Props & {
   type: string
 }
 
-const InputWithMovingLabel: React.FC<PropsInternal> = ({value, setValue, label, type, fontawesomeClass}: PropsInternal) => {
+const InputWithMovingLabel: React.FC<PropsInternal> = ({value, setValue, label, type, fontawesomeClass, extraClasses}: PropsInternal) => {
 
   return (
-    <div className="input-with-moving-label" >
+    <div className={`input-with-moving-label ${extraClasses}`} >
       <input id="input-1" 
              type={type} 
              required 
@@ -33,7 +34,8 @@ const InputWithMovingLabel: React.FC<PropsInternal> = ({value, setValue, label, 
   
 }
 InputWithMovingLabel.defaultProps = {
-  fontawesomeClass: "hidden"
+  fontawesomeClass: "hidden",
+  extraClasses: ""
 }
 const TextAreaWithMovingLabel: React.FC<Props> = ({value, setValue, label}: Props) => {
 

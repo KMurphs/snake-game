@@ -1,5 +1,5 @@
 #login{
-  grid-template: 1fr auto auto / 1fr;
+  /* grid-template: 1fr auto auto / 1fr; */
 }
 
 
@@ -22,13 +22,16 @@
   flex: 1 1 10px;
 }
 
-.logo-container{
+
+
+.logo-inner-container{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
   grid-template-rows: repeat(auto-fit, minmax(20px, 1fr));
   border: 2px solid #ccc;
   /* box-shadow: 0px 0px 5px 0px #ccc; */
   box-shadow: 0px 0px 5px 0px rgba(44, 89, 172, .5);
+  height: 100%;
 }
 
 .grid-item{
@@ -38,7 +41,7 @@
 .grid-item.logo-bg{
   background-color: #ddd;
 }
-.grid-item.logo-bg.logo-snake{
+.grid-item.logo-snake{
   background-color: #2C59AC;
   background-color: var(--secondary-500);
   opacity: attr(data-grid);
@@ -48,4 +51,39 @@
 #login .input-with-moving-label {
   --color: #e87c66;
   --color: var(--primary-500);
+}
+
+
+
+
+#login .input-with-moving-label.invalid::after{
+  background-color: #dc5959;
+}
+#login .input-with-moving-label.invalid label{
+  animation: shake linear 5s;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes shake{
+  0% {
+    transform:  translate(0px,0px)  ;
+  }
+  2% {
+    transform:  translate(-5px,0px)  ;
+  }
+  4% {
+    transform:  translate(5px,0px)  ;
+  }
+  6% {
+    transform:  translate(-5px,0px)  ;
+  }
+  8% {
+    transform:  translate(5px,0px)  ;
+  }
+  10%{
+    transform:  translate(0px,0px);
+  }
+  100% {
+    transform:  translate(0px,0px)  ;
+  }
 }
