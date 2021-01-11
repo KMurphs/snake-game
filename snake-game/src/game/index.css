@@ -25,10 +25,11 @@
 .game-control i{
   /* color: white; */
   font-size: 2.5rem;
-  text-shadow: 2px 2px 7px black;
+  text-shadow: 2px 2px 7px var(--secondary-800);
+  color: var(--secondary-500);
 }
 .game-control:active i{
-  text-shadow: 0px 0px 7px black;
+  text-shadow: 0px 0px 7px var(--secondary-800);
 }
 
 
@@ -36,24 +37,24 @@
 /* Pulse Animation */
 .game-control.animating{
   background: transparent;
-  box-shadow: 0 0 0 0 rgba(44, 89, 172, 1);
+  box-shadow: 0 0 0 0 var(--secondary-300);
   transform: scale(1);
 	animation: pulse-primary 0.3s 1;
 }
 @keyframes pulse-primary {
 	0% {
 		/* transform: scale(0.95); */
-		box-shadow: 0 0 0 0 rgba(44, 89, 172, 0.7);
+		box-shadow: 0 0 0 0 rgba(185, 4, 116, 0.7);
 	}
 	
 	70% {
 		/* transform: scale(1); */
-		box-shadow: 0 0 0 15px rgba(44, 89, 172, 0);
+		box-shadow: 0 0 0 15px rgba(185, 4, 116, 0);
 	}
 	
 	100% {
 		/* transform: scale(0.95); */
-		box-shadow: 0 0 0 0 rgba(44, 89, 172, 0);
+		box-shadow: 0 0 0 0 rgba(185, 4, 116, 0);
 	}
 }
 
@@ -61,13 +62,14 @@
 
 .game-keypad{
   grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr 1fr;
-  /* max-width: 250px; */
+  
 }
-/* .game-keypad > div::before{
-  display: block;
-  padding-bottom: 100%;
-  content: "";
-} */
+
 .game-keypad > div{
   height: 72px;
+}
+
+
+.side-pane{
+  transition: right .3s;
 }

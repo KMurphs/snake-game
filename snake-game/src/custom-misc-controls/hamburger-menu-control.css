@@ -13,6 +13,7 @@
   display: inline-block;
   position: relative;
   --main-color: #d3531a;
+  z-index: 100;
 }
 #hamburger-menu-checkbox{
   position: absolute;
@@ -53,6 +54,7 @@
   -o-transition: .25s ease-in-out;
   transition: .25s ease-in-out;
   z-index: 100;
+  box-shadow: 1px 1px 5px -1px #000;
 }
 .hamburger-menu span:nth-child(1) {
   top: 0px;

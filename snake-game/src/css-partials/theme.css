@@ -13,6 +13,7 @@ code {
 }
 :root{
   --primary-500: #2c59ac;
+  --secondary-800: #580037;
   --secondary-500: #b90474;
   --secondary-300: #e93ba6;
 }
@@ -87,4 +88,10 @@ code {
 
 input{
   padding: .5rem 1rem !important;
+}
+
+
+.container-frozen {
+	background-color: rgba(255, 255, 255, .15);
+	backdrop-filter: blur(10px);
 }

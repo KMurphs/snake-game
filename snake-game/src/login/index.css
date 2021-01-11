@@ -46,7 +46,8 @@
 .grid-item.logo-bg{
   background-color: #ddd;
 }
-.grid-item.logo-snake{
+.grid-item.logo-snake,
+.grid-item.is-of-body{
   background-color: #2C59AC;
   background-color: var(--secondary-500);
   opacity: attr(data-grid);

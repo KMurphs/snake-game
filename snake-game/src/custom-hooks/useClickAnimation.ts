@@ -4,11 +4,11 @@ export default function useClickAnimation(
 
     animationClass: string = "animating", 
     animationPeriod: number = 300, 
-    callback?: ()=>void
+    callback?: (data?: any)=>void
   
   ){
 
-  const onAnimatedClick = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
+  const onAnimatedClick = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>, data?: any)=>{
     
     // Get a handle on the element click, and being animating
     const target = ev.currentTarget;
@@ -19,7 +19,7 @@ export default function useClickAnimation(
       // A few moments have passed. Force stop the animation
       // and execute the callback if any
       target.classList.remove(animationClass);
-      callback && callback();
+      callback && callback(data);
       
     }, animationPeriod)
   }

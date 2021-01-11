@@ -1,11 +1,15 @@
 import "./hamburger-menu-control.css"
 
-export default function Hamburger(){
+
+type Props = {
+  onChange: (newState: boolean) => void
+}
+export default function Hamburger({onChange}:Props){
 
 
   return (
     <div className="hamburger-menu-container">
-      <input type="checkbox" id="hamburger-menu-checkbox"/>
+      <input type="checkbox" id="hamburger-menu-checkbox" onChange={e=>onChange(!e.target.checked)}/>
       <label htmlFor="hamburger-menu-checkbox" className="hamburger-menu">
         <span></span>
         <span></span>

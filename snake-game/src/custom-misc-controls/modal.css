@@ -40,7 +40,10 @@
     padding-top: 1rem;
     max-width: 85vw;
 }
-
+.modal__outer-container{
+	background-color: rgba(255, 255, 255, .15);
+	backdrop-filter: blur(5px);
+}
 
 @keyframes zoom-in {
     0% {
@@ -102,10 +105,10 @@
 
 
 
-.container-frozen {
+/* .container-frozen {
 	background-color: rgba(255, 255, 255, .15);
 	backdrop-filter: blur(5px);
-}
+} */
 
 
 
