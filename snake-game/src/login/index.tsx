@@ -80,18 +80,18 @@ export default function Login({onLogin}:Props){
   
 
   return (
-    <section id="login" className="flex flex-col w-full height-100vh p-6 m-auto flex-wrap justify-center max-w-lg md:max-w-full">
+    <section id="login" className="flex flex-col w-full height-100vh p-6 m-auto flex-wrap justify-center max-w-lg md:max-w-screen-xl">
 
-      <header className="logo-container flex-auto md:flex-full md:w-6/12">
+      <header className="logo-container flex-auto md:flex-full md:w-5/12 md:mr-10 lg:mr-20 lg:flex lg:items-center">
         <LogoBoard/>
       </header>
 
-      <main className="main-text pt-8 flex-initial md:w-6/12 md:max-w-sm">
-        <h1 className="text-3xl md:text-5xl pb-2 md:pb-8 text-gray-600">Snake Game</h1>
-        <h2 className="text-gray-500 md:text-xl">A most addictive game. <br/>Enter username to start playing.</h2>
+      <main className="main-text pt-8 flex-initial md:w-5/12 md:max-w-sm md:mx-4 lg:mr-auto lg:max-w-screen-lg">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl pb-2 md:pb-8 text-gray-600 ">Snake Game</h1>
+        <h2 className="text-gray-500 md:text-xl lg:text-2xl">A most addictive game. <br/>Enter username to start playing.</h2>
       </main>
 
-      <footer className="form-container mt-4 flex-initial md:mt-20 md:max-w-sm">
+      <footer className="form-container mt-4 flex-initial md:mt-20 md:max-w-sm md:mx-4">
         <TextInput value={username} setValue={val => setUsername(val + "")} label="Enter Username" fontawesomeClass="fas fa-user" extraClasses={showValidatedFrom && !isUsernameValid(username) ? "invalid" : ""}/>
         <button className="btn w-full mt-16" onClick={()=>handleOnLogin(users, username)}>Start</button>
       </footer>

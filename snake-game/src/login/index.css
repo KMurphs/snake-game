@@ -32,8 +32,13 @@
   /* box-shadow: 0px 0px 5px 0px #ccc; */
   box-shadow: 0px 0px 5px 0px rgba(44, 89, 172, .5);
   height: 100%;
+  flex: 1 1 auto;
 }
-
+@media(min-width: 1024px){
+  .logo-inner-container{
+    max-height: 800px;
+  }
+}
 .grid-item{
   outline: 1px solid #fafafa;
   transition: opacity .2s, background-color .2s;
