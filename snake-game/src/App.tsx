@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -11,19 +11,29 @@ import Game from './game';
 import { isOnProductionHost } from './custom-hooks/generalHelpers';
 import { useResetToBaseURIOnLoad, useAppURI } from './custom-hooks/scrollHelpers';
 import { useCustomCss_vh } from './custom-hooks/useCustomCss_vh';
-import { TUser } from './store/type';
+import { Direction, TUser } from './store/type';
 
 
 type Props = {
   isLoggedIn: boolean,
   version: string,
   loginUser: (user: TUser)=>void,
-  user: TUser
+  changePauseState: ()=>void,
+  setNextDirection: (dir: Direction | null)=>void,
+  resetGame: ()=>void,
+  user: TUser,
+  nextSnakeDirection: Direction | null,
+  isPaused: boolean
 }
 
-function App({isLoggedIn, version, loginUser, user}: Props) {
+function App({isLoggedIn, version, loginUser, user, nextSnakeDirection, resetGame, changePauseState, setNextDirection, isPaused}: Props) {
 
   console.log(`Current App version: ${version}`);
+
+  const grabNextDirection = ()=>{
+    nextSnakeDirection && setNextDirection(null);
+    return nextSnakeDirection;
+  }
 
 
   useCustomCss_vh();
@@ -48,7 +58,15 @@ function App({isLoggedIn, version, loginUser, user}: Props) {
 
           
         <Route path={`/play`} render={({history})=>(
-          isLoggedIn ? <Game user={user}/*backToWelcome={()=>history.push(`/welcome`)} *//> : <Redirect to={`/login`} />
+          isLoggedIn ? <Game user={user} 
+                             nextSnakeDirection={nextSnakeDirection}
+                             resetGame={resetGame}
+                             changePauseState={changePauseState}
+                             setNextDirection={setNextDirection}
+                             grabNextDirection={grabNextDirection}
+                             isPaused={isPaused}
+                             /*backToWelcome={()=>history.push(`/welcome`)} *//> 
+                     : <Redirect to={`/login`} />
         )}/>
 
 

@@ -1,16 +1,16 @@
 import { useLayoutEffect } from "react";
+import { Direction } from "../store/type";
 
 
 
-export enum Direction {
-  UP = 0,
-  DOWN = 1,
-  LEFT = 2,
-  RIGHT = 3,
-}
+
 export type Point = {
   x: number,
   y: number
+}
+export type Snake = {
+  body: Point[],
+  direction: Direction
 }
 
 /**
@@ -59,9 +59,9 @@ export const getInitialSnake = (rows: number, cols: number)=>{
  */
 export const getNewSnake = (oldSnake: Point[], direction: Direction) => {
   const newHead = translate(oldSnake[0], direction);
-  const newTail = oldSnake.splice(0, oldSnake.length - 2);
+  const newBody = oldSnake.slice(0, oldSnake.length - 1);
   const tail = oldSnake[oldSnake.length - 1]
-  return [[newHead, ...newTail], [tail]]
+  return [[newHead, ...newBody], [tail]]
 }
 
 /**
@@ -126,3 +126,20 @@ const intToPaddedString = (n: number, size: number) => {
  * @returns {string}: string
  */
 export const secsToString = (secs: number): string => (Math.floor(secs/60) === 0 ? "" : secsToString(Math.round(secs/60)) + ":") + intToPaddedString(secs % 60, 2);
+
+
+
+/**
+ * Given two direction, determine whether they are parallel or perpendicular in which case the both directions are different.
+ * @date 2021-01-12
+ * @param {Direction} dir1:Direction
+ * @param {Direction} dir2:Direction
+ * @returns {boolean}: boolean
+ */
+export const hasDirectionChanged = (dir1: Direction, dir2: Direction) => {
+  const horizontalDirs = [Direction.LEFT, Direction.RIGHT];
+  const verticalDirs = [Direction.UP, Direction.DOWN];
+  if(horizontalDirs.includes(dir1) && horizontalDirs.includes(dir2)) return false;
+  if(verticalDirs.includes(dir1) && verticalDirs.includes(dir2)) return false;
+  return true
+}

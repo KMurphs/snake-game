@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react"
-import { getInitialSnake, markSnake, useBoardDimension } from "./utils";
+import { Direction } from "../store/type";
+import { getInitialSnake, getNewSnake, hasDirectionChanged, markSnake, Snake, useBoardDimension } from "./utils";
 
 
+type Props = {
+  grabNextDirection: ()=> Direction | null,
+}
 
-
-export default function Board(){
+export default function Board({grabNextDirection}: Props){
 
   const [gridData, setGridData] = useState({cols: 1,rows: 1})
   const gridSize = 20;
@@ -20,43 +23,71 @@ export default function Board(){
   
 
 
+
   const cssClass = "is-of-body";
-  const snake = useRef(getInitialSnake(grid_rows, grid_cols));
+  const snake = useRef<Snake>({ body: getInitialSnake(grid_rows, grid_cols), direction: Direction.RIGHT});
   // This effect draws the initial snake on screen. Should only run once or twice
   useEffect(()=>{
     const target = boardRef.current
-    snake.current = getInitialSnake(grid_rows, grid_cols);
-    markSnake(target, snake.current, cssClass, true);
+    snake.current.body = getInitialSnake(grid_rows, grid_cols);
+    markSnake(target, snake.current.body, cssClass, true);
 
     // Cleanup current snake on screen
-    return () => markSnake(target, snake.current, cssClass, false);
+    return () => markSnake(target, snake.current.body, cssClass, false);
   }, [grid_rows, grid_cols])
 
 
 
 
 
-  // useEffect(()=>{
-  //   const interval = setInterval(()=>{
+
+
+
+  // Provide a way for the setInterval to reference the updated grabNextDirection and not 
+  // the original value by closure
+  const getNextDirection = useRef({ f: grabNextDirection });
+  // Supporting effect, to update container for grabNextDirection so that the interval
+  // function always has the latest value
+  useEffect(()=>{
+    getNextDirection.current.f = grabNextDirection;
+  }, [grabNextDirection])
+
+  // Tick effect, runs every so many millisecond. It is responsible for forcing
+  // the snake into movement. If the user hasnot provided a direction from (obtained from "grabNextDirection")
+  // the snake will move along its current heading
+  useEffect(()=>{
+    const interval = setInterval(()=>{
       
-
-  //     const [newSnake, tail] = getNewSnake(snake.current, Direction.RIGHT);
-  //     snake.current = newSnake;
-
-  //     const tailNode = boardRef.current?.querySelector(`.grid-item.row-${tail[0].x}.col-${tail[0].y}`);
-  //     tailNode?.classList.remove(cssClass);
-
-  //     const headNode = boardRef.current?.querySelector(`.grid-item.row-${newSnake[0].x}.col-${newSnake[0].y}`);
-  //     const isInvalidHead = headNode?.classList.contains(cssClass);
-  //     !isInvalidHead && headNode?.classList.add(cssClass);
+      // Get Snake direction
+      const nextDirection = getNextDirection.current.f();
+      console.log(nextDirection)
+      if(hasDirectionChanged(nextDirection || snake.current.direction, snake.current.direction)){
+        snake.current.direction = nextDirection || snake.current.direction;   
+      }
+  
+      // Build new body, and get tail
+      const [newSnake, tail] = getNewSnake(snake.current.body, snake.current.direction);
+      snake.current.body = newSnake;
+  
+      // Draw snake head at new coordinates after movement
+      const tailNode = boardRef.current?.querySelector(`.grid-item.row-${tail[0].y}.col-${tail[0].x}`);
+      tailNode?.classList.remove(cssClass);
+  
+      // Erase last snake element
+      const headNode = boardRef.current?.querySelector(`.grid-item.row-${newSnake[0].y}.col-${newSnake[0].x}`);
+      const isInvalidHead = headNode?.classList.contains(cssClass);
+      !isInvalidHead && headNode?.classList.add(cssClass);
       
-  //   }, 500) 
-  //   return () => clearInterval(interval)
-  // })
+    }, 500);
+
+    return () => clearInterval(interval)
+  }, [])
 
 
 
 
+
+  
   return (
     <div className="logo-inner-container" ref={boardRef}>
     {
@@ -65,3 +96,11 @@ export default function Board(){
     </div>
   )
 }
+
+
+
+
+
+// export const BoardWithStore = (function(fc: React.FC<Props>){
+
+// })(Board)

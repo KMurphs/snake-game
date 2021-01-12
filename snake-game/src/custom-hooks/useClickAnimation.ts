@@ -10,6 +10,9 @@ export default function useClickAnimation(
 
   const onAnimatedClick = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>, data?: any)=>{
     
+    // Provide instant click effect and let the inconsequential animation follow later
+    callback && callback(data);
+
     // Get a handle on the element click, and being animating
     const target = ev.currentTarget;
     !target.classList.contains(animationClass) && target.classList.add(animationClass);
@@ -19,7 +22,7 @@ export default function useClickAnimation(
       // A few moments have passed. Force stop the animation
       // and execute the callback if any
       target.classList.remove(animationClass);
-      callback && callback(data);
+      // callback && callback(data);
       
     }, animationPeriod)
   }
