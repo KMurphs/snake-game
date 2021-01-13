@@ -90,7 +90,7 @@ function App({
    */ 
   useEffect(()=>{
     console.log(`Current App version: ${version}`);
-  },[])
+  },[version])
   
 
 
@@ -132,7 +132,7 @@ function App({
     (u.name === username) && (u.best = getBestSession(u.best, u.last));
     return u;
   }));
-  const deleteUser = (obsoleteUser: TUser) => setUsers(users => users.filter(u => u.name !== obsoleteUser.name));
+  // const deleteUser = (obsoleteUser: TUser) => setUsers(users => users.filter(u => u.name !== obsoleteUser.name));
   const getUserByName = (username: string) => users.find(u => u.name.toLowerCase() === username.toLowerCase());
   const getBestUser = () => users.sort((a,b) => orderSessions(a.best, b.best) ? 1 : -1)[0];
 

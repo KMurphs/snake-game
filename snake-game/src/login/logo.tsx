@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useBoardDimension } from "../game/utils"
 
 
@@ -77,16 +77,17 @@ export const getLogo = (rows: number, cols: number, xWidth: number, yHeight: num
  * Various Incrementing functions
  */
 const increment = (low: number, high: number, curr: number) => curr >= high ? low : curr + 1
-const circularIncrement = (low: number, high: number, curr: number) => increment(low, high, curr) > high ? low : increment(low, high, curr);
-function* circularIterator(data: number[], start: number){
-  let index = ((start > data.length - 1) || (start < 0)) ? 0 : start;
-  let counter = 0;
-  while(++counter < data.length){
-    yield data[index];
-    index = increment(0, data.length - 1, index);
-  }
-  return counter;
-}
+// const circularIncrement = (low: number, high: number, curr: number) => increment(low, high, curr) > high ? low : increment(low, high, curr);
+// function* circularIterator(data: number[], start: number){
+//   let index = ((start > data.length - 1) || (start < 0)) ? 0 : start;
+//   let counter = 0;
+//   while(++counter < data.length){
+//     yield data[index];
+//     index = increment(0, data.length - 1, index);
+//   }
+//   return counter;
+// }
+
 /**
  * Given an index return a point on the straight line that passes by (x = 0, y = start) and (x = intervals, y = end).
  * "index" is actually a x coordinates between 0 and intervals, and the function returns the corresponding y coordinates.

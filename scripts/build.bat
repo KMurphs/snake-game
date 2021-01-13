@@ -7,22 +7,22 @@ CD ..\snake-game
 
 
 ECHO Delete current release folder content
-DEL /F/Q/S ..\docs\app\*.* > NUL
-RMDIR /Q/S ..\docs\app
+DEL /F/Q/S ..\docs\docs\*.* > NUL
+RMDIR /Q/S ..\docs\docs
 DEL /F/Q/S ..\docs\*.* > NUL
 
 
 ECHO Copy Github page files
 @REM Github Pages expect the entry point to be index.md or readme.md 
-ROBOCOPY ..\github-pages ..\docs\ /MIR /NFL /NDL 
-COPY ..\readme.md ..\docs
+ROBOCOPY ..\github-pages ..\docs\docs\ /MIR /NFL /NDL 
+COPY ..\readme.md ..\docs\docs
 COPY build\favicon.ico ..\docs
 
 
 ECHO Copy release files
 @REM https://stackoverflow.com/a/7487697/9034699
-MKDIR ..\docs\app
-ROBOCOPY build ..\docs\app /MIR /NFL /NDL 
+@REM MKDIR ..\docs\
+ROBOCOPY build ..\docs\ /MIR /NFL /NDL 
 
 
 
@@ -35,4 +35,4 @@ git commit -m "Released current automated build to Github page"
 git push 
 
 ECHO Return to original directory
-CD .\table-sorting
+CD .\snake-game
