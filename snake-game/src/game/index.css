@@ -73,3 +73,13 @@
 .side-pane{
   transition: right .3s;
 }
+
+
+#game.has-won .modal__outer-container{
+	background-color: rgba(0, 167, 0, .64);
+	backdrop-filter: blur(5px);
+}
+#game.has-lost .modal__outer-container{
+	background-color: rgba(173, 0, 0, .72);
+	backdrop-filter: blur(5px);
+}

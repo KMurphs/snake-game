@@ -38,30 +38,34 @@ export const translate = (p: Point, direction: Direction): Point => {
  * @param {any} cols: number - The number of columns in the board
  * @returns {any}
  */
-export const getInitialSnake = (rows: number, cols: number)=>{
+export const getInitialSnake = (rows: number, cols: number): Snake=>{
   const length = 3
   const center: Point = { x: Math.floor(rows / 2), y: Math.floor(cols / 2) }
   const snake = Array(length).fill(0).reduce((acc: Point[]) => [...acc, translate(acc[acc.length - 1], Direction.LEFT)], [center])
-  return snake;
+  return { body: snake, direction: Direction.RIGHT};
 } 
 
 /**
  * The current snake needs to step one step along "direction".
  * 
  * The function will create a new point (head) in that direction, extract the last element from the current snake.
- * The new snake returned is "head" and the rest of the current snake without its last point.
- * The last element is returned to be erased from the ui.
+ * The new snake returned is "head" and the rest of the current snake without its last point unless the new head 
+ * assimilates the crumb.
+ * 
+ * If not, the last element is returned to be erased from the ui.
+ * If the crumb is assimilated, tail remain part of the snake
  * 
  * @date 2021-01-11
  * @param {Point[]} oldSnake: Point[]
  * @param {Direction} direction: Direction (up, down, left, right)
  * @returns {Point[]}: Point[]
  */
-export const getNewSnake = (oldSnake: Point[], direction: Direction) => {
+export const getNewSnake = (oldSnake: Point[], direction: Direction, crumb: Point) => {
   const newHead = translate(oldSnake[0], direction);
-  const newBody = oldSnake.slice(0, oldSnake.length - 1);
-  const tail = oldSnake[oldSnake.length - 1]
-  return [[newHead, ...newBody], [tail]]
+  const hasAssimilatedCrumb = arePointsEqual(newHead, crumb);
+  const newBody = oldSnake.slice(0, oldSnake.length - (hasAssimilatedCrumb ? 0 : 1));
+  const tail = hasAssimilatedCrumb ? [] : [oldSnake[oldSnake.length - 1]];
+  return [[newHead, ...newBody], tail]
 }
 
 /**
@@ -143,3 +147,52 @@ export const hasDirectionChanged = (dir1: Direction, dir2: Direction) => {
   if(verticalDirs.includes(dir1) && verticalDirs.includes(dir2)) return false;
   return true
 }
+
+/**
+ * Generate a random Point with coordinates between 0 and rows or cols for y and x respectively.
+ * 
+ * @date 2021-01-12
+ * @param {number} rows:number
+ * @param {number} cols:number
+ * @returns {Point}
+ */
+const getRandomPoint = (rows: number, cols: number): Point => ({
+  x: Math.floor(Math.random() * (cols - 1)), 
+  y: Math.floor(Math.random() * (rows - 1))
+})
+
+/**
+ * Verifies whether a point does not occupies the same physical space as List of points.
+ * 
+ * @date 2021-01-12
+ * @param {Point} p:Point
+ * @param {Point[]} snakeBody:Point[]
+ * @returns {boolean}: True when p does not have the same coordinates as any points of snakeBody
+ */
+const doesPointBelongToSnake = (p: Point, snakeBody: Point[]): boolean => snakeBody.reduce(
+  (acc: boolean, curr) => acc || arePointsEqual(curr, p), 
+  false
+)
+/**
+ * Function will randomly create a point on the board and ensure that the point does not intersect with
+ * the snake body
+ * @date 2021-01-12
+ * @param {number} rows:number of rows in game board
+ * @param {number} cols:number of rows in game board
+ * @param {Point[]} snakeBody:Point[] - List of Point/Grid square that make up the snake body
+ * @returns {Point}: Point - The randomly generated crumb
+ */
+export const getNewCrumb = (rows: number, cols: number, snakeBody: Point[]) => {
+  let p: Point = snakeBody[0];
+  while(doesPointBelongToSnake(p, snakeBody)) p = getRandomPoint(rows, cols);
+  return p;
+}
+
+/**
+ * Checks whether two point (with coordinates x and y) are the same
+ * @date 2021-01-12
+ * @param {any} p1:Point
+ * @param {any} p2:Point
+ * @returns {any}
+ */
+export const arePointsEqual = (p1: Point, p2: Point) => ((p1.x === p2.x) && (p1.y === p2.y))

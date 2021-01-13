@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { TextInput } from "../custom-form-controls/input-with-moving-label"
 import Modal from "../custom-misc-controls/modal"
 import { TUser } from "../store/type"
@@ -7,32 +7,18 @@ import LogoBoard from "./logo"
 
 type Props = {
   onLogin: (user: TUser)=>void
+  addUser: (user: string)=>TUser
+  getUserByName: (username: string)=>TUser|undefined
 }
 
 
-const fromLocalStorage = (key: string, defaultValue: any) => {
 
-  const localString = localStorage.getItem(key);
 
-  if(!localString) return defaultValue;
+const isUsernameValid = (value: string | null | undefined)=> value && value !== "" && value !== null && value !== undefined;
 
-  if(typeof(defaultValue) === "string") return localString;
-  if(typeof(defaultValue) === "number") return parseFloat(localString);
 
-  let obj = defaultValue;
-  try{ obj = JSON.parse(localString); }
-  catch(err){ }
-  return obj;
-}
 
-const toLocalStorage = (key: string, value: any) => {
-  const dataStr = typeof(value) !== "object" ? value + "" : JSON.stringify(value)
-  localStorage.setItem(key, dataStr)
-}
-
-const isUsernameValid = (value: string | null | undefined)=> value && value !== "" && value !== null && value !== undefined
-const capitalizeFirstLetter = (word: string) => word.substr(0, 1).toUpperCase() + word.substr(1).toLowerCase()
-export default function Login({onLogin}:Props){
+export default function Login({onLogin, getUserByName, addUser}:Props){
 
   const [showModal, setShowModal] = useState(false);
   const [username, setUsername] = useState("");
@@ -43,10 +29,10 @@ export default function Login({onLogin}:Props){
    * If user is registered, proceed to login user.
    * If user is not registered, pull modal to get from user, how we should proceed.
    */
-  const handleOnLogin = (users: TUser[], username: string)=>{
+  const handleOnLogin = (username: string)=>{
     setShowValidatedForm(true);
     if(!isUsernameValid(username)) return
-    const [user] = users.filter(curr => curr.name.toLowerCase() === username.toLowerCase());
+    const user = getUserByName(username);
     user && onLogin(user);
     !user && setShowModal(true);
   }
@@ -58,22 +44,12 @@ export default function Login({onLogin}:Props){
    */
   const handleUnkownUserResponse = (username: string, doRegisterUser : boolean) => {
     if(!isUsernameValid(username)) return
-    const user: TUser = { name: capitalizeFirstLetter(username), pointScore: 0, timeScore: 0 }
-    doRegisterUser && setUsers(u => [...u, user]);
+    doRegisterUser && onLogin(addUser(username));
     !doRegisterUser && setUsername("");
     setShowModal(false);
-    doRegisterUser && onLogin(user);
   }
-  /**
-   * Local storage effect. Commit "users" state/cache object to storage.
-   * Set "users" to updated storage content
-   */
-  const [users, setUsers] = useState<TUser[]>([]);
-  useEffect(()=>{
-    users.length > 0 && toLocalStorage("users", users);
-    const storageUsers = fromLocalStorage("users", []);
-    (users.length !== storageUsers.length) && setUsers(storageUsers);
-  }, [users])
+
+
 
 
 
@@ -93,7 +69,7 @@ export default function Login({onLogin}:Props){
 
       <footer className="form-container mt-4 flex-initial md:mt-20 md:max-w-sm md:mx-4">
         <TextInput value={username} setValue={val => setUsername(val + "")} label="Enter Username" fontawesomeClass="fas fa-user" extraClasses={showValidatedForm && !isUsernameValid(username) ? "invalid" : ""}/>
-        <button className="btn w-full mt-16" onClick={()=>handleOnLogin(users, username)}>Start</button>
+        <button className="btn w-full mt-16" onClick={()=>handleOnLogin(username)}>Start</button>
       </footer>
 
       <Modal show={showModal} onClose={()=>setShowModal(false)} containerExtraClasses="new-user-container">

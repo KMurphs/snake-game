@@ -52,6 +52,11 @@
   background-color: var(--secondary-500);
   opacity: attr(data-grid);
 }
+.grid-item.is-crumb{
+  background-color: #2C59AC;
+  background-color: var(--primary-500);
+  opacity: attr(data-grid);
+}
 
 
 #login .input-with-moving-label {

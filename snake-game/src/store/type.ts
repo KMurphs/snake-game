@@ -12,9 +12,15 @@ export enum Direction {
 
 export type TState = {
   version: string,
-  user: TUser,
+  user: ReduxUser,
   nextSnakeDirection: Direction | null,
-  isPaused: boolean
+  isPaused: boolean,
+  hasLost: boolean,
+  hasWon: boolean,
+  maximumScore: number
+  chronometerStart: number | null
+  chronometerCurrent: number,
+  levelScore: number
 }
 
 export type TReducer = (state: TState, action: TAction) => TState
@@ -22,6 +28,17 @@ export type TReducer = (state: TState, action: TAction) => TState
 
 export type TUser = {
   name: string,
+  last: SessionScore,
+  best: SessionScore,
+}
+export type ReduxUser = {
+  name: string,
+  current: SessionScore
+}
+
+export type SessionScore = {
   timeScore: number,
   pointScore: number,
+  level: number,
+  id: number,
 }
