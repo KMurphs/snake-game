@@ -75,17 +75,12 @@ export default function Board({grabNextDirection, isPaused, hasLost, hasWon, not
   // the snake into movement. If the user hasnot provided a direction from (obtained from "grabNextDirection")
   // the snake will move along its current heading
   useEffect(()=>{
-    console.log("+++++", managementControls.current.getLevelSpeed())
     const interval = setInterval(()=>{
-
-      console.log("***")
       
       // If state is paused or terminated, do nothing
       if(managementControls.current.getPausedState()) return;
       if(managementControls.current.getLostState()) return;
       if(managementControls.current.getWonState()) return;
-
-      console.log("****")
 
       // Notify store to update user game time score
       managementControls.current.onTimerTick();
@@ -141,7 +136,7 @@ export default function Board({grabNextDirection, isPaused, hasLost, hasWon, not
 
     }, managementControls.current.getLevelSpeed());
 
-    return () => {clearInterval(interval); console.log("+++++")}
+    return () => clearInterval(interval);
   }, [grid_cols, grid_rows, user.current.id])
 
 

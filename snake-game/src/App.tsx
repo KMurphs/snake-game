@@ -13,6 +13,7 @@ import { useResetToBaseURIOnLoad, useAppURI } from './custom-hooks/scrollHelpers
 import { useCustomCss_vh } from './custom-hooks/useCustomCss_vh';
 import { Direction, TUser, SessionScore, ReduxUser } from './store/type';
 import { fromLocalStorage, toLocalStorage } from './custom-utils/local-storage';
+import { secsToString } from './game/utils';
 
 
 
@@ -26,6 +27,7 @@ type Props = {
   onLostGame: ()=>void,
   onScorePoint: ()=>void,
   onTimerTick: ()=>void,
+  onLogout: ()=>void,
   onResultFeedback: ()=>void,
   getNewUser: (name?: string)=>TUser,
   user: ReduxUser,
@@ -43,7 +45,8 @@ const getBestSession = (session1: SessionScore, session2: SessionScore) => {
   if((session1.timeScore * session1.pointScore) < (session2.timeScore * session2.pointScore)) { return session2; } 
   return session1;
 }
-function App({isLoggedIn, version, onUserLogin, user, gameTimeScore, nextSnakeDirection, onResetGame, onChangePauseState, onNextDirection, getNewUser, onResultFeedback, isPaused, hasLost, hasWon, onLostGame, onScorePoint, level, onTimerTick}: Props) {
+const orderSessions = (session1: SessionScore, session2: SessionScore) => getBestSession(session1, session2) === session1 
+function App({isLoggedIn, version, onUserLogin, user, gameTimeScore, nextSnakeDirection, onLogout, onResetGame, onChangePauseState, onNextDirection, getNewUser, onResultFeedback, isPaused, hasLost, hasWon, onLostGame, onScorePoint, level, onTimerTick}: Props) {
 
   console.log(`Current App version: ${version}`, user);
 
@@ -81,6 +84,7 @@ function App({isLoggedIn, version, onUserLogin, user, gameTimeScore, nextSnakeDi
   }));
   const deleteUser = (obsoleteUser: TUser) => setUsers(users => users.filter(u => u.name !== obsoleteUser.name));
   const getUserByName = (username: string) => users.find(u => u.name.toLowerCase() === username.toLowerCase());
+  const getBestUser = () => users.sort((a,b) => orderSessions(a.best, b.best) ? 1 : -1)[0];
 
   /**
    * Effect that runs when game is terminated either because user won or lost. The user with its current score
@@ -91,6 +95,8 @@ function App({isLoggedIn, version, onUserLogin, user, gameTimeScore, nextSnakeDi
     updateUser(user.name, user.current);
   }, [hasLost, hasWon])
 
+
+  const DetailsWithProps = () => <Details currentUser={getUserByName(user.name)} bestUser={getBestUser()} onLogout={onLogout}/>
 
 
   return (
@@ -123,6 +129,7 @@ function App({isLoggedIn, version, onUserLogin, user, gameTimeScore, nextSnakeDi
                              onResultFeedback={onResultFeedback}
                              isPaused={isPaused}
                              hasLost={hasLost}
+                             DetailsFC={DetailsWithProps}
                              hasWon={hasWon}
                              level={level}
                              gameTimeScore={gameTimeScore}
@@ -149,3 +156,46 @@ function App({isLoggedIn, version, onUserLogin, user, gameTimeScore, nextSnakeDi
 }
 
 export default App;
+
+
+
+
+type ResultProps = {
+  currentUser: TUser|undefined,
+  bestUser: TUser|undefined,
+  onLogout: ()=>void
+}
+
+function Details({currentUser, bestUser, onLogout}: ResultProps){
+  return (
+    <div id="details" className=" p-4 pt-8 rounded-lg h-full flex flex-col justify-between items-stretch">
+
+      <div>
+        <h1 className="text-xl pb-2"><span>Current: </span><strong>{currentUser ? currentUser.name: "None"}</strong></h1>
+        {currentUser && (
+          <ul>
+            <li><span>Score: </span>{currentUser?.last.pointScore} points</li>
+            <li><span>Time: </span>{secsToString(currentUser?.last.timeScore)} sec</li>
+            <li><span>Level: </span>Level {currentUser?.last.level}</li>
+          </ul>
+        )}
+      </div>
+
+      <div>
+        <h1 className="text-xl pb-2"><span>Best Overall: </span><strong>{bestUser ? bestUser.name: "None"}</strong></h1>
+        {bestUser && (
+          <ul>
+            <li><span>Score: </span>{bestUser?.best.pointScore} points</li>
+            <li><span>Time: </span>{secsToString(bestUser?.best.timeScore)} sec</li>
+            <li><span>Level: </span>Level {bestUser?.best.level}</li>
+          </ul>
+        )}
+      </div>
+
+      <div className="flex color-main justify-between flex-wrap ">
+        <button onClick={onLogout} className="btn mt-8 mx-2 w-full bg-red-600">Logout</button>
+      </div>
+
+    </div>
+  )
+}

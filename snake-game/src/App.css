@@ -1,0 +1,6 @@
+#details span:first-child{
+  color: #999;
+  display: inline-block;
+  width: 8rem;
+}
+

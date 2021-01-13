@@ -22,15 +22,17 @@ type Props = {
   hasLost: boolean,
   hasWon: boolean,
   level: number
-  gameTimeScore: number
+  gameTimeScore: number,
+  DetailsFC: React.FC
 }
 
 
 
-export default function Game({user, notifyGameFailure, onChangePauseState, onResetGame, onNextDirection, gameTimeScore, isPaused, hasLost, hasWon, grabNextDirection, onResultFeedback, notifyScorePoint, level, onTimerTick}:Props){
+export default function Game({user, notifyGameFailure, onChangePauseState, onResetGame, onNextDirection, DetailsFC, gameTimeScore, isPaused, hasLost, hasWon, grabNextDirection, onResultFeedback, notifyScorePoint, level, onTimerTick}:Props){
 
   const [isPaneOpen, setIsPaneOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const uiRef = useRef<HTMLElement|null>(null);
 
   const handleKeyPress = (key: string) => {
     if(key === " ") return onChangePauseState();
@@ -50,16 +52,18 @@ export default function Game({user, notifyGameFailure, onChangePauseState, onRes
   const onResultFeedbackWrapper = ()=>{
     setShowModal(false);
     onResultFeedback();
+    uiRef.current?.focus();
   }
 
   const modalClass = hasLost ? "has-lost" : hasWon ? "has-won" : "";
   useEffect(()=>{
     hasLost && setShowModal(true);
     hasWon && setShowModal(true);
+    uiRef.current?.focus();
   }, [hasLost, hasWon])
 
   return (
-    <section id="game" className={`flex flex-col w-full height-100vh px-6 py-2 m-auto ${modalClass}`} tabIndex={0} onKeyDown={e=>handleKeyPress(e.key)}>
+    <section id="game" ref={uiRef} className={`flex flex-col w-full height-100vh px-6 py-2 m-auto ${modalClass}`} tabIndex={0} onKeyDown={e=>handleKeyPress(e.key)}>
 
 
       <header className="flex justify-between items-center h-8 mb-6 relative">
@@ -76,7 +80,7 @@ export default function Game({user, notifyGameFailure, onChangePauseState, onRes
       <main className="flex-auto">
         <Board grabNextDirection={grabNextDirection} isPaused={isPaused} user={user} hasLost={hasLost} hasWon={hasWon} notifyGameFailure={notifyGameFailure} onTimerTick={onTimerTick} notifyScorePoint={notifyScorePoint}/>
         <div className={`side-pane fixed top-0 bottom-0 right-0 w-full p-4 pt-12 z-10 container-frozen ${isPaneOpen ? "" : "-right-full"}`}>
-          Hello
+          <DetailsFC/> 
         </div>
       </main>
 
@@ -134,7 +138,7 @@ function Results({hasWon, hasLost, onResponse, user}: ResultProps){
         }
       </div>
 
-      <div className="flex bg-white color-main justify-between flex-wrap ">
+      <div className="flex color-main justify-between flex-wrap ">
         {hasWon && (<button onClick={() => onResponse()} className="btn mt-8 mx-2">Yes! On to next Level</button>)}
         {hasLost && (<button onClick={() => onResponse()} className="btn mt-8 mx-2">Let's Restart</button>)}
       </div>

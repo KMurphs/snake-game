@@ -99,7 +99,7 @@ function UnknownUser({onResponse, name}: UnknownUserProps){
         <p> Would you like to register "<strong>{name}</strong>" as a new user?<br/></p>
       </div>
 
-      <div className="flex bg-white color-main justify-between flex-wrap ">
+      <div className="flex color-main justify-between flex-wrap ">
         <button onClick={() => onResponse(false)} className="btn btn-secondary p-4 mt-8 mx-2">No, Return</button>
         <button onClick={() => onResponse(true)} className="btn mt-8 mx-2">Yes, Register</button>
       </div>

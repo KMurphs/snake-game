@@ -18,9 +18,13 @@ const mainReducer: Reducer<TState | undefined, TAction> = (state, action)=>{
       action.payload && (state.user = getNewReduxUser());
       action.payload && (state.user.name = action.payload.name);
       return { ...state };
+    case "LOGOUT_USER":
+      action.payload && (state.user = getNewReduxUser());
+      action.payload && (state.user.name = "");
+      return { ...state };
 
 
-
+      
 
 
     case "CHANGE_DIRECTION":
@@ -110,6 +114,7 @@ const mapStateToProps = (state: TState)=>{
 const mapDispatchToProps = (dispatch: Dispatch<TAction>)=>{
   return {
     onUserLogin: (user: TUser) => dispatch({type: "LOGIN_USER", payload: user}),
+    onLogout: (user: TUser) => dispatch({type: "LOGOUT_USER", payload: user}),
     onNextDirection: (dir: Direction | null) => dispatch({type: "CHANGE_DIRECTION", payload: dir}),
     onChangePauseState: () => dispatch({type: "PAUSE_RESUME_GAME", payload: null}),
     onResetGame: () => dispatch({type: "RESET_GAME", payload: null}),
