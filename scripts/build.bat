@@ -32,7 +32,7 @@ ECHO Push to origin
 CD ..
 git add *
 git commit -m "Released current automated build to Github page"
-git push origin gh-pages
+git push origin gh-pages --force
 
 ECHO Return to original directory
 CD .\snake-game
