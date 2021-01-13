@@ -34,6 +34,10 @@ export default function Game({user, notifyGameFailure, onChangePauseState, onRes
   const [showModal, setShowModal] = useState(false);
   const uiRef = useRef<HTMLElement|null>(null);
 
+
+  /**
+   * Function handles keys from the physical keyboard or the keypad on the ui
+   */
   const handleKeyPress = (key: string) => {
     if(key === " ") return onChangePauseState();
     if(key === "PAUSE") return onChangePauseState();
@@ -49,6 +53,8 @@ export default function Game({user, notifyGameFailure, onChangePauseState, onRes
     if(key === "ArrowRight") return onNextDirection(Direction.RIGHT);
   }
 
+
+
   const onResultFeedbackWrapper = ()=>{
     setShowModal(false);
     onResultFeedback();
@@ -56,11 +62,18 @@ export default function Game({user, notifyGameFailure, onChangePauseState, onRes
   }
 
   const modalClass = hasLost ? "has-lost" : hasWon ? "has-won" : "";
+  /**
+   * Effect responsible for showing the final pass/fail modals at the end of a game session.
+   */
   useEffect(()=>{
     hasLost && setShowModal(true);
     hasWon && setShowModal(true);
     uiRef.current?.focus();
   }, [hasLost, hasWon])
+
+
+
+
 
   return (
     <section id="game" ref={uiRef} className={`flex flex-col w-full height-100vh px-6 py-2 m-auto ${modalClass}`} tabIndex={0} onKeyDown={e=>handleKeyPress(e.key)}>
@@ -100,13 +113,24 @@ export default function Game({user, notifyGameFailure, onChangePauseState, onRes
 }
 
 
+
+
+
+
+
+
+
+
+
 type ResultProps = {
   hasLost: boolean,
   hasWon: boolean,
   user: ReduxUser,
   onResponse: ()=>void
 }
-
+/**
+ * Component displaying pass/fail at the end of a game session.
+ */
 function Results({hasWon, hasLost, onResponse, user}: ResultProps){
   return (
     <div className="new-user p-4 rounded-lg">

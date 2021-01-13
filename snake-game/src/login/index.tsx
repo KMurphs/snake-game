@@ -88,7 +88,9 @@ type UnknownUserProps = {
   name: string,
   onResponse: (registerUser: boolean)=>void
 }
-
+/**
+ * Modal for when logging in as a new user. Do we register? or do we retry logging in?
+ */
 function UnknownUser({onResponse, name}: UnknownUserProps){
   return (
     <div className="new-user p-4 rounded-lg">

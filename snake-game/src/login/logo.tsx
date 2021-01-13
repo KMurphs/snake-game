@@ -1,18 +1,50 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useBoardDimension } from "../game/utils"
 
 
 
 
 
 
+/**
+ * Send back all number of the form: start + (delta * k)
+ * Where k can be any non-zero positive integer as long as the resulting number stays less than end
+ * 
+ * These number form an arithmetic progression.
+ * 
+ * @date 2021-01-13
+ * @param {number} delta:number - Distance between two consecutive produced numbers
+ * @param {number} start:number - The initial point to which delta is added 
+ * @param {number} end:number - The maximum limit for the numbers produced
+ * @returns {number[]} - List of numbers forming an arithmetic progression between start and end.
+ */
 const getProgressionUntil = (delta: number, start: number, end: number): number[] => 
   start < end 
   ? [start, ...getProgressionUntil(delta, start + delta, end)] 
   : []
 
+/**
+ * Given the available length ("items" input), and the occupied length ("length" input), return how much
+ * space must be added on the both side of the occupied space for it to be centered.
+ * @date 2021-01-13
+ * @param {number} items:number
+ * @param {number} length:number
+ * @returns {number} - how much length to put on each side of "length" for it to be centered in "items"
+ */
 const getMargin = (items: number, length: number) => 
   Math.max(Math.floor((items - length)/2), 0) 
 
+
+
+/**
+ * Contruct a snake logo on a grid (rows x cols). The snake logo must be drawn over "xWidth" cols and "yHeight" rows
+ * @date 2021-01-13
+ * @param {any} rows:number
+ * @param {any} cols:number
+ * @param {any} xWidth:number
+ * @param {any} yHeight:number
+ * @returns {any}
+ */
 export const getLogo = (rows: number, cols: number, xWidth: number, yHeight: number)=>{
 
   const filter = (item: number, index: number) => index >= getMargin(cols, xWidth) && index < cols - getMargin(cols, xWidth)
@@ -41,10 +73,12 @@ export const getLogo = (rows: number, cols: number, xWidth: number, yHeight: num
 
 
 
+/**
+ * Various Incrementing functions
+ */
 const increment = (low: number, high: number, curr: number) => curr >= high ? low : curr + 1
-    
-    
-export function* circularIterator(data: number[], start: number){
+const circularIncrement = (low: number, high: number, curr: number) => increment(low, high, curr) > high ? low : increment(low, high, curr);
+function* circularIterator(data: number[], start: number){
   let index = ((start > data.length - 1) || (start < 0)) ? 0 : start;
   let counter = 0;
   while(++counter < data.length){
@@ -53,14 +87,26 @@ export function* circularIterator(data: number[], start: number){
   }
   return counter;
 }
+/**
+ * Given an index return a point on the straight line that passes by (x = 0, y = start) and (x = intervals, y = end).
+ * "index" is actually a x coordinates between 0 and intervals, and the function returns the corresponding y coordinates.
+ * @date 2021-01-13
+ * @param {number} start:number
+ * @param {number} end:number
+ * @param {number} intervals:number
+ * @param {number} index:number
+ * @returns {number}
+ */
+const linearIncrement = (start: number, end: number, intervals: number, index: number) => start + index * (end - start) / intervals;
 
 
-const useBoardDimension = (target: HTMLElement | null, cb: (clientWidth: number, clientHeight: number) => void)=>{
-  useLayoutEffect(()=>{
-    !target && cb(1, 1);
-    target && cb(target.clientWidth, target.clientHeight);
-  }, [target, cb])
-}
+
+
+
+
+
+
+
 
 
 export default function LogoBoard(){
@@ -78,22 +124,26 @@ export default function LogoBoard(){
   useBoardDimension(boardRef.current, getBoardDimension)
   
 
+  const logoBody = getLogo(grid_rows, grid_cols, xLength, yLength);
 
-  const logoBody = getLogo(grid_rows, grid_cols, xLength, yLength)
-  const circularIncrement = (low: number, high: number, curr: number) => curr >= high ? low : curr + 1
-  const linearIncrement = (start: number, end: number, intervals: number, index: number) => start + index * (end - start) / intervals
+
+
+
+  /**
+   * Main effect. It draws the snake logo in perpetual movement
+   */
   useEffect(()=>{
     let currPos = 0;
     const snakeLength = logoBody.length //20
     
     const interval = setInterval(()=>{
 
-      currPos = circularIncrement(0, logoBody.length - 1, currPos);
+      currPos = increment(0, logoBody.length - 1, currPos);
       let processed = 0;
       let current = currPos - 1;
       while(processed < logoBody.length - 1){
         processed++;
-        current = circularIncrement(0, logoBody.length - 1, current);
+        current = increment(0, logoBody.length - 1, current);
 
         const target = boardRef.current?.querySelector(`.grid-item.idx-${logoBody[current]}`);
         if(!target) continue;
