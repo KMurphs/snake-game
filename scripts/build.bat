@@ -1,5 +1,5 @@
 @ECHO OFF
-CD ..\table-sorting
+CD ..\snake-game
 
 @REM This command prevents the batch file from carrying on executing the lines below
 @REM Change npm run release to "npm run build && ..\\scripts\\build.bat" in package.json
