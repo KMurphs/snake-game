@@ -7,22 +7,29 @@ CD ..\snake-game
 
 
 ECHO Delete current release folder content
-DEL /F/Q/S ..\docs\docs\*.* > NUL
-RMDIR /Q/S ..\docs\docs
-DEL /F/Q/S ..\docs\*.* > NUL
+DEL /F/Q/S ..\tmp\docs\*.* > NUL
+RMDIR /Q/S ..\tmp\docs
+DEL /F/Q/S ..\tmp\*.* > NUL
+
+
+@REM Connect tmp to gh-pages
+CD ..\tmp
+git init
+git remote add origin https://github.com/KMurphs/snake-game
+
 
 
 ECHO Copy Github page files
 @REM Github Pages expect the entry point to be index.md or readme.md 
-ROBOCOPY ..\github-pages ..\docs\docs\ /MIR /NFL /NDL 
-COPY ..\readme.md ..\docs\docs
-COPY build\favicon.ico ..\docs
+ROBOCOPY ..\github-pages ..\tmp\docs\ /MIR /NFL /NDL 
+COPY ..\readme.md ..\tmp\docs
+COPY build\favicon.ico ..\tmp
 
 
 ECHO Copy release files
 @REM https://stackoverflow.com/a/7487697/9034699
 @REM MKDIR ..\docs\
-ROBOCOPY build ..\docs\ /MIR /NFL /NDL 
+ROBOCOPY build ..\tmp\ /MIR /NFL /NDL 
 
 
 
