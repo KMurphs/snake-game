@@ -1,13 +1,18 @@
 # [Game Snake](https://github.com/KMurphs/snake-game.git)
 
-See a styled version of this documentation at: [https://kmurphs.github.io/snake-game](https://kmurphs.github.io/snake-game)
+
+- A live version of the project is displayed at: [https://kmurphs.github.io/snake-game](https://kmurphs.github.io/snake-game)
+
+- See a styled version of this documentation at: [https://kmurphs.github.io/snake-game/docs](https://kmurphs.github.io/snake-game/docs)
+
+
 
 ## Overview
 
 -  Project was born as an evaluation for the complexity involved in writing a simple **Game**. The **Snake Game** consists of snake that moves on grid within border that it must never hit. Regularily a crumb is randomly placed on the screen. The snake comsumes the crumb, grows and gets points. After a maximum is reached, the user is proclaimed winner, and the game restart at a faster pace everytime.
--  Due to the number of components that had to interact with each other, a simplified **redux** was implemented to act as a central **State Management Store** for the application. This allowed for a clearer picture and conceptualization of the program inner workings.
--  The project is written in **python**, an makes uses of **Turtle Graphics** which are intergrated with python distributions.
--  The project was consciously written in a more **Functional Programming** style as opposed to the familiar **Object Oriented Programming**. As such, **Side effects** were kept to a minimum, confined within wrappers. **Pure functions** were used whenever possible. 
+-  Due to the number of components that had to interact with each other, **Redux** is used as a central **State Management Store** is used for the application. This allowed for a clearer picture and conceptualization of the program inner workings.
+-  The project is written in **Javascript/Typescript**, an makes uses of **TailwindCSS**.
+-  The project was consciously written in a more **Functional Programming** style as opposed to the familiar **Object Oriented Programming**. As such, ceraful attention is paid to **Side effects** and using **Pure functions** whenever possible. 
 -  The **Functional Programming** paradigm is being learnt, and the project is used as playground to play with concepts and ways of thinking and explore how they compare to **OOP**'s own concepts and way of thinking.
 
 
@@ -18,9 +23,9 @@ The **Snake Game** consists of snake that moves on grid within border that it mu
 
 **Duration**: 8 hours 
 
-**Tools, Technologies, Skills**: Python, Redux, State Management, Turtle Graphics
+**Tools, Technologies, Skills**: Javascript, Typescript, React, Redux, State Management
 
-**Languages**: Python 3 with typing
+**Languages**: Javascript/Typescript
 
 
 
@@ -31,67 +36,55 @@ The project was motivated by the ``#100DaysOfCode`` twitter movement. Each day f
 
 
 
-## Setup
-1. [Python 3](https://www.python.org/downloads/) needs to be installed on the Test Machine
-    - It must also be included in the ``PATH`` system variable ([This](https://phoenixnap.com/kb/how-to-install-python-3-windows) reference can help, if unclear) 
-2. Install ``virtualenv``. The following assumes the Test Machine is a Windows Machine.
-    - Open a Command Prompt, and type 
-```
-pip install virtualenv
-```
+## Setup, Run, Build, Release the Script/Application
+1. In order to setup a machine to compile this project, ``NodeJS`` and ``npm`` must be installed on the machine. 
 
-
-
-
-### Run the Script/Application
-
-
-1. Open a Command Prompt, Naviguate to the ``snake-game`` directory, Activate the virtual environment and Install dependencies
-    - Note that an internet connection might be required to successfully perform this step
+2. Clone the project and Install packages:
 
 ```
-python -m venv .venv
-.venv\scripts\activate
-```
-
-Depending on whether the application will only be run, or if a development setup must be created, run one of the following
-
-
-```
-pip install -r .requirements\dev.txt
-
-pip install -r .requirements\prod.txt
-```
-
-2. On the commmand line prompt, type 
-
-
-```
-.venv\scripts\activate
+mkdir snake-game
 
 cd snake-game
-python main.py
+
+git clone https://github.com/KMurphs/snake-game.git
+
+npm install
 ```
+
+3. From the command line 
+
+    - To Run: ``npm start``
+    - To Build: ``npm build``
+    - To Release: ``npm run release``
+
+
 
 
 ## Github Page
 
-To support github pages, the following files/folders were placed in the root directiory of the project:
+To support github pages and allows automatic release to remote repo/branch:
 
-- ``assets``: Contains the css/scss stylesheet.
-- ``_config.yml``: Contains configuration information for the pages.
+1. ``.gh-pages`` is created at the root level (One can use ``.\.scripts\gh-pages.bat`` to setup this folder). 
+It contains:
+    
+    - ``repo``: A folder connected to the repo's ``origin`` at branch ``gh-pages``. This is the branch from which the github pages are built. 
+
+    - ``config``: Contains various files for the appearance of the github pages. 
+        - ``assets``: Contains the css/scss stylesheet.
+        - ``_config.yml``: Contains configuration information for the pages.
+
+2. On release, a temporary folder is created and setup using the files above. It is also connected to ``origin\gh-pages``. A commit and push are automatically triggered from there which cause its content to be uploaded to the remote branch, built and made live at:
+
+    - The Game: [https://kmurphs.github.io/snake-game](https://kmurphs.github.io/snake-game)
+
+    - This Documentation: [https://kmurphs.github.io/snake-game/docs](https://kmurphs.github.io/snake-game/docs)
 
 
-## Issues
 
-### Issues with imports
 
-The following line can help debug these issues.
-Place right of the top of a script
+<!-- ## Issues -->
 
-```
-print('__file__={0:<50} | __name__={1:<20} | __package__={2:<20}'.format(__file__,__name__,str(__package__)))
-```
+
 
 ## Contact Me
 
@@ -102,12 +95,18 @@ I'm opened to constructive criticism. If you have remarks/suggestions, I wam alw
 **Email**: [kibongesp@gmail.com](mailto:kibongesp@gmail.com?subject=[GitHub])
 
 
+
+
+
+<div style="display: none">
+
 ## References
+
 
 1. [https://stackoverflow.com/questions/43634583/prevent-landscape-orientation-mobile-website](https://stackoverflow.com/questions/43634583/prevent-landscape-orientation-mobile-website)
 2. [https://css-tricks.com/snippets/css/orientation-lock/](https://css-tricks.com/snippets/css/orientation-lock/)
 
-<div style="display: none">
+
 
 3. https://github.com/pypa/sampleproject
 4. https://pypi.org/project/python_boilerplate_template/

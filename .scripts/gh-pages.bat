@@ -15,5 +15,7 @@ git checkout -t origin/gh-pages --force
 REM Copy _config.yml and assets to config
 CD config
 
+
+CD ..\..
 ECHO .tmp >> ..\.gitignore
 ECHO .gh-pages/repo >> ..\.gitignore
