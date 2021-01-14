@@ -29,7 +29,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "release": "npm run build && ..\\scripts\\build.bat",
+    "release": "npm run build && ..\\.scripts\\release.bat",
     "test": "craco test",
     "eject": "react-scripts eject"
   },

@@ -15,7 +15,7 @@ type PropsInternal = Props & {
 const InputWithMovingLabel: React.FC<PropsInternal> = ({value, setValue, label, type, fontawesomeClass, extraClasses}: PropsInternal) => {
 
   return (
-    <div className={`input-with-moving-label ${extraClasses}`} >
+    <div className={`input-with-moving-label ${extraClasses} ${fontawesomeClass ? "has-icon" : ""}`} >
       <input id="input-1" 
              type={type} 
              required 

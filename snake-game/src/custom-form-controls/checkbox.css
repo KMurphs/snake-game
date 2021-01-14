@@ -75,6 +75,8 @@
     border-radius: 25px;
     display: flex;
     align-items: center;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
     height: fit-content;
     padding: 4px 4px 5px 4px;
     margin: 0 .5rem;

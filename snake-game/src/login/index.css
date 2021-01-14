@@ -71,9 +71,34 @@
   background-color: #dc5959;
 }
 #login .input-with-moving-label.invalid label{
-  animation: shake linear 5s;
-  animation-iteration-count: infinite;
+  -webkit-animation: shake linear 5s;
+          animation: shake linear 5s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
   transform-origin: 50% 50%;
+}
+@-webkit-keyframes shake{
+  0% {
+    transform:  translate(0px,0px)  ;
+  }
+  2% {
+    transform:  translate(-5px,0px)  ;
+  }
+  4% {
+    transform:  translate(5px,0px)  ;
+  }
+  6% {
+    transform:  translate(-5px,0px)  ;
+  }
+  8% {
+    transform:  translate(5px,0px)  ;
+  }
+  10%{
+    transform:  translate(0px,0px);
+  }
+  100% {
+    transform:  translate(0px,0px)  ;
+  }
 }
 @keyframes shake{
   0% {

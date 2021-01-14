@@ -22,13 +22,16 @@
   top: 0;
   left: 0;
   color: #777;
-  color: var(--color);;
+  color: var(--color);
 }
 .input-with-moving-label input,
 .input-with-moving-label textarea{
   /* General styles for the input */
 	z-index: 1;
 	background: none !important;
+}
+.input-with-moving-label.has-icon input{
+  margin-right: 1rem;
 }
 .input-with-moving-label *{
   /* General styles for the input */
@@ -57,10 +60,9 @@
 }
 .input-with-moving-label__icon{
   position: absolute;
-  right: .2rem;
+  right: .5rem;
   bottom: .75rem;
-  padding-left: .5rem;
-  background-color: white;
+  background-color: transparent;
   z-index: 5;
   color: #777;
   color: var(--color);
