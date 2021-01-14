@@ -8,8 +8,6 @@ import {
 } from "react-router-dom";
 import Login from './login';
 import Game from './game';
-import { isOnProductionHost } from './custom-hooks/generalHelpers';
-import { useResetToBaseURIOnLoad, useAppURI } from './custom-hooks/scrollHelpers';
 import { useCustomCss_vh } from './custom-hooks/useCustomCss_vh';
 import { Direction, TUser, SessionScore, ReduxUser } from './store/type';
 import { fromLocalStorage, toLocalStorage } from './custom-utils/local-storage';
@@ -99,11 +97,7 @@ function App({
    * CSS Effect to help with full screen on mobiles
    */ 
   useCustomCss_vh();
-  /**
-   * Effects that redirect the app to the default home page on refresh
-   */ 
-  useResetToBaseURIOnLoad("snake-game"/*, ()=>!isOnProductionHost()*/);
-  const uri = useAppURI("snake-game");
+
 
   
   /**
@@ -156,7 +150,7 @@ function App({
 
 
   return (
-    <Router basename={`${uri}`}>
+    <Router>
       <Switch>
 
 

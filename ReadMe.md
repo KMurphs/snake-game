@@ -23,7 +23,7 @@ The **Snake Game** consists of snake that moves on grid within border that it mu
 
 **Duration**: 8 hours 
 
-**Tools, Technologies, Skills**: Javascript, Typescript, React, Redux, State Management
+**Tools, Technologies, Skills**: Javascript, Typescript, React, React Router, Redux, State Management
 
 **Languages**: Javascript/Typescript
 
@@ -82,7 +82,12 @@ It contains:
 
 
 
-<!-- ## Issues -->
+## Issues
+
+- In some instances, **React Router** does not play nicely with **Github Pages**. <br/> If we are at ``<app-base-url>\<react-router-url>``, and the refresh button is hit. The browser interprets it as a request to the backend (the server that powers the Github Pages) for a resources which is located at that address. <br/><br/> Obvioulsy, there is no resources on the server at that location, or at least we do not want to have that resource sent back if it exists, or, as in most cases, we do not want Github's 404 page sent back.<br/><br/>
+The ``<react-router-url>`` portion of the url is purely a front end construct and we need a way to prevent a refresh to go a talk to the server. <br/>This [article](https://dev.to/zenulabidin/how-not-to-deploy-a-react-site-to-github-pages-42ge) put forward a feature of **React Router** that helps mitigate this.
+    - Use a ``HashRouter`` instead of the traditional ``BrowserRouter``     
+
 
 
 

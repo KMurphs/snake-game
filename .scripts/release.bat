@@ -21,7 +21,7 @@ MKDIR ..\%GH_PAGES_WORKING_FOLDER%
 
 ECHO Copy release files, github pages files and import connection to remote gh-pages branch 
 @REM https://stackoverflow.com/a/7487697/9034699
-ROBOCOPY ..\%GH_PAGES_ASSET_FOLDER%\config ..\%GH_PAGES_WORKING_FOLDER%\ /NFL /NDL 
+ROBOCOPY ..\%GH_PAGES_ASSET_FOLDER%\config ..\%GH_PAGES_WORKING_FOLDER%\ /MIR /NFL /NDL 
 ROBOCOPY ..\%GH_PAGES_ASSET_FOLDER%\repo\.git ..\%GH_PAGES_WORKING_FOLDER%\.git /MIR /NFL /NDL 
 
 MKDIR ..\%GH_PAGES_WORKING_FOLDER%\docs
