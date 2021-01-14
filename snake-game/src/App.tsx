@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   Redirect
@@ -102,7 +102,7 @@ function App({
   /**
    * Effects that redirect the app to the default home page on refresh
    */ 
-  useResetToBaseURIOnLoad("snake-game", ()=>!isOnProductionHost());
+  useResetToBaseURIOnLoad("snake-game"/*, ()=>!isOnProductionHost()*/);
   const uri = useAppURI("snake-game");
 
   

@@ -31,7 +31,7 @@
 	background: none !important;
 }
 .input-with-moving-label.has-icon input{
-  margin-right: 1rem;
+  padding-right: 2rem !important;
 }
 .input-with-moving-label *{
   /* General styles for the input */

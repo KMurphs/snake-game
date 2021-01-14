@@ -98,15 +98,18 @@ I'm opened to constructive criticism. If you have remarks/suggestions, I wam alw
 
 
 
-<div style="display: none">
+
 
 ## References
 
 
 1. [https://stackoverflow.com/questions/43634583/prevent-landscape-orientation-mobile-website](https://stackoverflow.com/questions/43634583/prevent-landscape-orientation-mobile-website)
 2. [https://css-tricks.com/snippets/css/orientation-lock/](https://css-tricks.com/snippets/css/orientation-lock/)
+3. [https://dev.to/zenulabidin/how-not-to-deploy-a-react-site-to-github-pages-42ge](https://dev.to/zenulabidin/how-not-to-deploy-a-react-site-to-github-pages-42ge)
 
 
+
+<div style="display: none">
 
 3. https://github.com/pypa/sampleproject
 4. https://pypi.org/project/python_boilerplate_template/

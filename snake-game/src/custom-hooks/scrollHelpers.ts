@@ -102,7 +102,9 @@ export const useResetToBaseURIOnLoad = (baseAppURI?: string, onCondition?: ()=>b
   
   const handleResetURI = () => {
     const condition = onCondition ? onCondition() : true;
-    condition && window.history.pushState(uri, uri, `${uri}`)
+    // condition && window.history.pushState(uri, uri, `${uri}`)
+    window.history.pushState(uri, uri, `${uri}`);
+    console.log(uri, uri, `${uri}`, condition);
   };
   
   useEffect(() => {
