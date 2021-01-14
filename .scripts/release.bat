@@ -1,7 +1,7 @@
 @ECHO OFF
 SET APP_FOLDER=snake-game
-SET GH_PAGES_WORKING_FOLDER=.tmp
-SET GH_PAGES_ASSET_FOLDER=.gh-pages
+SET GH_PAGES_TMP_FOLDER=.tmp
+SET GH_PAGES_LOCAL_FOLDER=.gh-pages
 SET GH_PAGES_REMOTE_BRANCH=gh-pages
 
 CD ..\%APP_FOLDER%
@@ -12,31 +12,31 @@ CD ..\%APP_FOLDER%
 
 
 ECHO Delete current release folder content
-DEL /F/Q/S ..\%GH_PAGES_WORKING_FOLDER%\*.* > NUL
-RMDIR /Q/S ..\%GH_PAGES_WORKING_FOLDER%
-MKDIR ..\%GH_PAGES_WORKING_FOLDER%
+DEL /F/Q/S ..\%GH_PAGES_TMP_FOLDER%\*.* > NUL
+RMDIR /Q/S ..\%GH_PAGES_TMP_FOLDER%
+MKDIR ..\%GH_PAGES_TMP_FOLDER%
 
 
 
 
 ECHO Copy release files, github pages files and import connection to remote gh-pages branch 
 @REM https://stackoverflow.com/a/7487697/9034699
-ROBOCOPY ..\%GH_PAGES_ASSET_FOLDER%\config ..\%GH_PAGES_WORKING_FOLDER%\ /MIR /NFL /NDL 
-ROBOCOPY ..\%GH_PAGES_ASSET_FOLDER%\repo\.git ..\%GH_PAGES_WORKING_FOLDER%\.git /MIR /NFL /NDL 
+ROBOCOPY ..\%GH_PAGES_LOCAL_FOLDER%\config ..\%GH_PAGES_TMP_FOLDER%\ /MIR /NFL /NDL 
+ROBOCOPY ..\%GH_PAGES_LOCAL_FOLDER%\repo\.git ..\%GH_PAGES_TMP_FOLDER%\.git /MIR /NFL /NDL 
 
-MKDIR ..\%GH_PAGES_WORKING_FOLDER%\docs
-COPY ..\readme.md ..\%GH_PAGES_WORKING_FOLDER%\docs
-COPY build\favicon.ico ..\%GH_PAGES_WORKING_FOLDER%\docs
+MKDIR ..\%GH_PAGES_TMP_FOLDER%\docs
+COPY ..\readme.md ..\%GH_PAGES_TMP_FOLDER%\docs
+COPY build\favicon.ico ..\%GH_PAGES_TMP_FOLDER%\docs
 
-ROBOCOPY build ..\%GH_PAGES_WORKING_FOLDER%\ /NFL /NDL 
-ROBOCOPY build\static ..\%GH_PAGES_WORKING_FOLDER%\static /MIR /NFL /NDL 
+ROBOCOPY build ..\%GH_PAGES_TMP_FOLDER%\ /NFL /NDL 
+ROBOCOPY build\static ..\%GH_PAGES_TMP_FOLDER%\static /MIR /NFL /NDL 
 
 
 
 
 
 ECHO Push to origin
-CD ..\%GH_PAGES_WORKING_FOLDER%
+CD ..\%GH_PAGES_TMP_FOLDER%
 git add *
 git commit -m "Released current automated build to Github page"
 git push origin gh-pages --force

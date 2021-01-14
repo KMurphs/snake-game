@@ -6,8 +6,8 @@ url: "https://kmurphs.github.io" # the base hostname & protocol for your site, e
 
 # Site Presentation
 title: Snake Game
-description: Simple Game Snake using Python and Turtle Graphics
+description: Simple Snake Game implemented using React.
 
 # Use for linking portfolio landing page to project
-skills: Python 3, Python Typing, Turtle Graphics, Game, Functional Programming, State Management, Redux
-banner: https://raw.githubusercontent.com/KMurphs/snake-game/master/docs/hero.png
+skills: React, Javascript/Typescript, Redux, React Router, Game, Functional Programming, State Management, TailwindCSS, Local Storage
+banner: https://raw.githubusercontent.com/KMurphs/snake-game/gh-pages/assets/imgs/hero.png

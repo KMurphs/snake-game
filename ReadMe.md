@@ -9,9 +9,10 @@
 
 ## Overview
 
--  Project was born as an evaluation for the complexity involved in writing a simple **Game**. The **Snake Game** consists of snake that moves on grid within border that it must never hit. Regularily a crumb is randomly placed on the screen. The snake comsumes the crumb, grows and gets points. After a maximum is reached, the user is proclaimed winner, and the game restart at a faster pace everytime.
+-  Project was born as an evaluation for the complexity involved in writing a simple **Game**.
 -  Due to the number of components that had to interact with each other, **Redux** is used as a central **State Management Store** is used for the application. This allowed for a clearer picture and conceptualization of the program inner workings.
 -  The project is written in **Javascript/Typescript**, an makes uses of **TailwindCSS**.
+-  **Local Storage** is used for **management and persistence** of users and game sessions. 
 -  The project was consciously written in a more **Functional Programming** style as opposed to the familiar **Object Oriented Programming**. As such, ceraful attention is paid to **Side effects** and using **Pure functions** whenever possible. 
 -  The **Functional Programming** paradigm is being learnt, and the project is used as playground to play with concepts and ways of thinking and explore how they compare to **OOP**'s own concepts and way of thinking.
 
